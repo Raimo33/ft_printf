@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 14:27:02 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/18 10:34:53 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/18 13:58:01 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int				ft_putsmth(char *str, va_list args);
 size_t			ft_strlen(const char *c);
 void			ft_putnbr_fd(int n, int fd);
 unsigned int	ft_nbrlen(long long n, unsigned int base);
+int				ft_atoi(const char *nptr);
 
 #endif

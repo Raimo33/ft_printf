@@ -6,9 +6,11 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 10:30:37 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/18 10:31:17 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:51:20 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../ft_printf.h"
 
 unsigned int	ft_nbrlen(long long n, unsigned int base)
 {
@@ -22,4 +24,3 @@ unsigned int	ft_nbrlen(long long n, unsigned int base)
 	}
 	return (i + 1);
 }
-

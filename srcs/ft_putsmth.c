@@ -6,39 +6,56 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 13:47:55 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/18 10:32:10 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:28:13 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/ft_printf.h"
+#include "../ft_printf.h"
 
 static int	put_uxx(char *str_types, va_list args);
 static int	put_cdi(char *str_types, va_list args);
 
 int	ft_putsmth(char *str, va_list args)
 {
-	char			*tmp_s;
-	void			*tmp_ptr;
+	char	*tmp_s;
+	void	*tmp_ptr;
+	int		nbr;
+	int 	i;
 
+	i = -1;
+	nbr = 0;
+	if (*str >= '0' && *str <= '9')
+	{
+		nbr = ft_atoi(str) - 1;
+		while (*str >= '0' && *str <= '9')
+			str++;
+		if (*str == 's' || *str == 'c' || *str == 'd' || *str == 'i' || *str == 'u' || *str == 'X' || *str == 'x' || *str == 'p') //accorciare con strcmp
+		{
+			while (++i < nbr)
+				write(1, " ", 1);
+		}
+		else
+			nbr = 0;
+	}
 	if (*str == 's')
 	{
 		tmp_s = va_arg(args, char *);
-		return (write(1, tmp_s, ft_strlen(tmp_s)));
+		return (write(1, tmp_s, ft_strlen(tmp_s)) + nbr);
 	}
-	else if (*str == 'c' || *str == 'd' || *str == 'i')
-		return (put_cdi(str, args));
-	else if (*str == 'u' || *str == 'x' || *str == 'X')
-		return (put_uxx(str, args));
-	else if (*str == 'p')
+	if (*str == 'c' || *str == 'd' || *str == 'i')
+		return (put_cdi(str, args) + nbr);
+	if (*str == 'u' || *str == 'x' || *str == 'X')
+		return (put_uxx(str, args) + nbr);
+	if (*str == 'p')
 	{
 		tmp_ptr = va_arg(args, void *);
+		if (tmp_ptr == NULL)
+			return (write(1, "(nil)", 5) + nbr);
 		write(1, "0x", 2);
 		ft_putnbr_base((long long)tmp_ptr, "0123456789abcdef");
-		return (ft_nbrlen((long long)tmp_ptr, 16) + 2);
+		return (ft_nbrlen((long long)tmp_ptr, 16) + 2 + nbr);
 	}
-	else
-		return (write(1, str, 1));
-	return (0);
+	return(write(1, str, 1));
 }
 
 static int	put_cdi(char *str_types, va_list args)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/ft_printf.h"
+#include "../ft_printf.h"
 
 static int	check_base(char *base, int len);
 
