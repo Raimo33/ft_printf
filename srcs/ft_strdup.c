@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: craimond <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 17:12:17 by craimond          #+#    #+#             */
-/*   Updated: 2023/07/30 17:12:19 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:53:09 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
+
+#include "../ft_printf.h"
 
 char	*ft_strdup(char *src);
 int		get_size(char *src);
@@ -25,6 +26,8 @@ char	*ft_strdup(char *src)
 	int		size;
 	char	*copiedstr;
 
+	if (src == NULL)
+		return (NULL);
 	i = 0;
 	size = get_size(src);
 	copiedstr = (char *) malloc(size);
