@@ -1,12 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/19 11:53:12 by craimond          #+#    #+#             */
+/*   Updated: 2023/10/19 11:53:12 by craimond         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../ft_printf.h"
+
+#include <stdio.h>
+/*
+int	main(void)
+{
+	char *ptr = malloc(42);
+	int return1 = ft_printf("%44p\n", ptr);
+	int return2 = printf("%44p\n", ptr);
+	
+	printf("return ft: %d\nreturn real: %d", return1, return2);
+}*/
+
 int	ft_printf(const char *str, ...)
 {
-    va_list args;
-    int     i;
-    int     padding;
-    int     output_len;
-    int     chars_written;
-    void    *tmp;
-    char    *str_tmp;
+	va_list			args;
+	int				i;
+	int				padding;
+	int				output_len;
+	int				chars_written;
+	void			*tmp;
+	char			*str_tmp;
+	int				tmp_i;
+	unsigned int	tmp_ui;
+	unsigned char	c;
 
     i = 0;
     output_len = 0;
@@ -17,37 +45,41 @@ int	ft_printf(const char *str, ...)
         while (str[i] != '%' && str[i] != '\0')
             i++;
         chars_written += write(1, str, i);
-        str += i;
+        str += i + 1;
         if (ft_isdigit(*str))
         {
             while (*str == '0')
                 str++; //nel bonus aggiungere una flag
             padding = ft_atoi(str);
             str += ft_nbrlen(padding, 10);
-            if (*str == 'c' || *str == '%')
+            if (*str == 'c')
                 output_len = 1;
+			else if (*str == '%')
+				padding = 0;
             else if(*str == 's')
             {
-                tmp = (void *)va_arg(args, char *);
+                tmp = ft_strdup(va_arg(args, char *));
                 output_len = ft_strlen((char *)tmp);
             }
             else if(*str == 'd' || *str == 'i' || *str == 'x' || *str == 'X')
             {
-                tmp = (void *)&va_arg(args, int);
+                tmp_i = va_arg(args, int);
+                tmp = &tmp_i;
                 if (*str == 'd' || *str == 'i')
-                    output_len = ft_nbrlen(*((int *)tmp), 10);
+                    output_len = ft_nbrlen(tmp_i, 10);
                 else
-                    output_len = ft_nbrlen(*((int *)tmp), 16);
+                    output_len = ft_nbrlen(tmp_i, 16);
             }
-            else if(*str == 'u' || *str == 'x' || *str == 'X')
+            else if(*str == 'u')
             {
-                tmp = (void *)&va_arg(args, unsigned int);
-                output_len = ft_nbrlen(*((unsigned int *)tmp), 10);
+                tmp_ui = va_arg(args, unsigned int);
+                tmp = &tmp_ui;
+                output_len = ft_nbrlen(tmp_ui, 10);
             }
             else if(*str == 'p')
             {
-                tmp = (void *)&va_arg(args, void *);
-                output_len = ft_nbrlen(tmp, 16);
+                tmp = va_arg(args, void *);
+                output_len = ft_nbrlen((long long)tmp, 16) + 2;
             }
             if (padding > output_len)
             {
@@ -57,7 +89,10 @@ int	ft_printf(const char *str, ...)
             }
         }
         if (*str == 'c')
-            chars_written += write(1, &va_arg(args, char), 1);
+		{
+			c = (unsigned char)va_arg(args, int);
+			chars_written += write(1, &c, 1);
+		}
         else if (*str == '%')
             chars_written += write(1, "%", 1);
         else if (*str == 's')
@@ -85,5 +120,6 @@ int	ft_printf(const char *str, ...)
         i = 0;
     }
     va_end(args);
+	free(tmp);
     return (chars_written);
 }
