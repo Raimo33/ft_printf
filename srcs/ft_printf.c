@@ -15,10 +15,10 @@
 // int	main(void)
 // {
 // 	char *ptr = malloc(42);
-// 	int return1 = ft_printf("%%%%");
+// 	int return1 = ft_printf("%3.5u", 42);
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%%%%");
-// 	//printf("return ft: %d\nreturn real: %d", return1, return2);
+// 	int return2 = printf("%3.5u", 42);
+// 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
 int	ft_printf(const char *str, ...)
@@ -98,3 +98,4 @@ int	ft_printf(const char *str, ...)
 	va_end(args);
 	return (chars_written);
 }
+
