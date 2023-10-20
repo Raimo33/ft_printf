@@ -6,13 +6,13 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:32:43 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/20 12:38:26 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:01:53 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-char	*ft_itoa_base(int n, char *base)
+char	*ft_itoa_base(long long n, char *base)
 {
 	char			*str;
 	unsigned int	n_len;

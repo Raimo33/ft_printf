@@ -15,9 +15,10 @@
 // int	main(void)
 // {
 // 	char *ptr = malloc(42);
-// 	int return1 = ft_printf("%3.5u", 42);
+// 	int c;
+// 	int return1 = ft_printf("%-p", &c);
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%3.5u", 42);
+// 	int return2 = printf("%-p", &c);
 // 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
