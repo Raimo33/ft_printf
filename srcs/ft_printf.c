@@ -12,14 +12,14 @@
 
 #include "../ft_printf.h"
 
-// int	main(void)
-// {
-// 	char *ptr = malloc(42);
-// 	int return1 = ft_printf("%024p", NULL);
-// 	write(1, "\n", 1);
-// 	int return2 = printf("%024p", NULL);
-// 	//printf("return ft: %d\nreturn real: %d", return1, return2);
-// }
+int	main(void)
+{
+	char *ptr = malloc(42);
+	int return1 = ft_printf("cacca%s", "www");
+	write(1, "\n", 1);
+	//int return2 = printf("%d", 42);
+	//printf("return ft: %d\nreturn real: %d", return1, return2);
+}
 
 int	ft_printf(const char *str, ...)
 {
@@ -28,10 +28,9 @@ int	ft_printf(const char *str, ...)
 	int				padding;
 	int				output_len;
 	int				chars_written;
-	void			*tmp;
+	char			*tmp_str;
 	short			is_minus;
 	char			padding_char;
-	unsigned char	c;
 
 	i = 0;
 	output_len = 0;
@@ -41,7 +40,6 @@ int	ft_printf(const char *str, ...)
 	va_start(args, str);
 	while (*str != '\0')
 	{
-		tmp = NULL;
 		while (*str != '%' && *str != '\0')
 			chars_written += write(1, str++, 1);
 		if (*str == '\0')
@@ -58,48 +56,32 @@ int	ft_printf(const char *str, ...)
 			padding_char = '0';
 			str++;
 		}
-		padding = ft_atoi(str); //controllo numero
-		str += ft_nbrlen(padding, 10); //skippo numero
-		////////////////CONTROLLO LUNGHEZZA OUTPUT//////////////////////////////
+		padding = ft_atoi(str);
+		str += nbrlen(padding, 10);
 		if (*str == 'c')
-			output_len = 1;
+			fill_c(args, &tmp_str);
 		else if (*str == '%')
+		{
 			padding = 0;
+			fill_percent(&tmp_str);
+		}	
 		else if (*str == 's')
-			output_len = outputlen_s(&args, tmp);
+			tmp_str = ft_strdup(va_arg(args, char *));
 		else if (*str == 'd' || *str == 'i' || *str == 'x' || *str == 'X')
-			output_len = outputlen_dixx(&args, (char *)str, tmp);
+			fill_dixx(args, &tmp_str, (char *)str);
 		else if (*str == 'u')
-			output_len = outputlen_u(&args, tmp);
+			tmp_str = ft_itoa_base(va_arg(args, unsigned int), "0123456789");
 		else if (*str == 'p')
-			output_len = outputlen_p(&args, tmp);
-		///////////////////CALCOLO PADDING//////////////////////////////////////
+			fill_p(args, &tmp_str);
+		output_len = ft_strlen(tmp_str);
 		if (padding > output_len)
 			padding -= output_len;
 		else
 			padding = 0;
 		if (is_minus == 0)
 			chars_written += add_padding((char *)str, padding_char, padding);
-		//////////////////////////WRITE////////////////////////////// 
-		if (*str == 'c')
-		{
-			c = (unsigned char)va_arg(args, int);
-			chars_written += write(1, &c, 1);
-		}
-		else if (*str == '%')
-			chars_written += write(1, "%", 1);
-		else if (*str == 's')
-			chars_written += write_s(tmp);
-		else if (*str == 'd' || *str == 'i')
-			chars_written += write_di(tmp);
-		else if (*str == 'u')
-			chars_written += write_u(tmp);
-		else if (*str == 'x' || *str == 'X')
-			chars_written += write_xx(tmp, (char *)str);
-		else if (*str == 'p')
-			chars_written += write_p(tmp);
-		if (is_minus == 1)
-			chars_written += add_padding((char *)str, padding_char, padding);
+		chars_written += putstr(tmp_str);
+		free(tmp_str);
 		str++;
 		i = 0;
 	}

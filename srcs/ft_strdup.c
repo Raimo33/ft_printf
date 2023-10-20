@@ -6,19 +6,14 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 17:12:17 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/19 17:53:09 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:49:01 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-char	*ft_strdup(char *src);
-int		get_size(char *src);
-/*
-int main(void)
-{
-	printf("%s\n", ft_strdup("stringaaaa "));
-}*/
+char			*ft_strdup(char *src);
+static int		get_size(char *src);
 
 char	*ft_strdup(char *src)
 {
@@ -42,7 +37,7 @@ char	*ft_strdup(char *src)
 	return (copiedstr);
 }
 
-int	get_size(char *src)
+static int	get_size(char *src)
 {
 	int	n;
 

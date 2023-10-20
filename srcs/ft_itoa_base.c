@@ -1,66 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:32:43 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/15 12:49:23 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:59:19 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-static int	nbr_len(long n);
-/*
-int	main(void)
+char	*ft_itoa_base(int n, char *base)
 {
-	int n = 132220;
-	printf("n: %d\nstr: %s\n", n, ft_itoa(n));
-}*/
+	char			*str;
+	unsigned int	n_len;
+	unsigned int	base_len;
 
-char	*ft_itoa(int n)
-{
-	char	*str;
-	int		n_len;
-	long	n_long;
-
-	n_long = n;
-	n_len = nbr_len(n_long);
+	base_len = ft_strlen(base);
+	n_len = nbrlen(n, base_len);
 	str = malloc((n_len + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	if (n_long == 0)
+	if (n == 0)
 		str[0] = '0';
-	if (n_long < 0)
+	if (n < 0)
 	{
-		n_long *= -1;
+		n *= -1;
 		str[0] = '-';
 	}
 	str[n_len] = '\0';
-	while (n_long > 0)
+	while (n > 0)
 	{
-		str[n_len-- - 1] = (n_long % 10) + 48;
-		n_long /= 10;
+		str[n_len-- - 1] = base[n % (int)base_len];
+		n /= (int)base_len;
 	}
 	return (str);
 }
 
-static int	nbr_len(long n)
+unsigned int	nbrlen(long long n, unsigned int base)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
-	if (n <= 0)
+	if (n < 0)
 	{
 		n *= -1;
 		i++;
 	}
-	while (n > 0)
+	while (n >= 10)
 	{
-		n /= 10;
+		n /= base;
 		i++;
 	}
-	return (i);
+	return (i + 1);
 }

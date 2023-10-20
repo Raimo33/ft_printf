@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 10:44:59 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/19 11:56:59 by craimond         ###   ########.fr       */
+/*   Created: 2023/07/23 10:11:56 by craimond          #+#    #+#             */
+/*   Updated: 2023/10/20 10:43:30 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int	ft_isdigit(int c)
+char	*ft_strcpy(char *dest, char *src)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (*(src + i) != '\0')
+	{
+		*(dest + i) = *(src + i);
+		i++;
+	}
+	*(dest + i) = '\0';
+	return (dest);
 }

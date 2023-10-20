@@ -6,19 +6,13 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 10:06:30 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/19 12:37:20 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:46:36 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
 static int	ft_isspace(const char c);
-/*
-int	main(void)
-{
-	const char	*str = "   \t\n \r -681\t62h ";
-	printf("stringa: %s\nnumero: %d\n", str, ft_atoi(str));
-}*/
 
 int	ft_atoi(const char *nptr)
 {

@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/19 21:56:33 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:23:10 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ int	add_padding(char *str, char padding_char, int padding)
 	}
 	return (chars_written);
 }
-
