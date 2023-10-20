@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putstr.c                                           :+:      :+:    :+:   */
+/*   precision_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 18:43:57 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/20 11:19:58 by craimond         ###   ########.fr       */
+/*   Created: 2023/10/20 14:17:56 by craimond          #+#    #+#             */
+/*   Updated: 2023/10/20 14:26:14 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "../ft_printf.h"
 
-int	putstr(char *str)
+char *precision_str(int precision, long long n, int base)
 {
-	int n;
+	char	*tmp_str1;
 
-	while (*str != '\0')
-	{
-		n += write(1, str, 1);
-		str++;
-	}
-	return (n);
+	if (precision > (int)nbrlen(n, base))
+		precision -= (int)nbrlen(n, base);
+	else
+		precision = 0;
+	tmp_str1 = malloc(sizeof(char) * (precision + 1));
+	tmp_str1[precision] = '\0';
+	while (--precision > 0)
+		tmp_str1[precision] = '0';
+	return (tmp_str1);
 }

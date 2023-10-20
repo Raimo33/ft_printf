@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 11:05:19 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/19 12:34:06 by craimond         ###   ########.fr       */
+/*   Created: 2023/10/10 14:42:58 by craimond          #+#    #+#             */
+/*   Updated: 2023/10/20 13:58:58 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-size_t	ft_strlen(const char *c)
+char	*ft_strjoin(const char *s1, const char *s2)
 {
-	size_t	n;
+	char	*newstr;
+	int		i;
+	int		n;
+	size_t	s1_len;
+	size_t	s2_len;
 
-	n = 0;
-	while (c[n])
-		n++;
-	return (n);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	i = -1;
+	newstr = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (newstr == NULL)
+		return (NULL);
+	while (s1[++i] != '\0')
+		newstr[i] = s1[i];
+	n = i;
+	i = -1;
+	while (s2[++i] != '\0')
+		newstr[n + i] = s2[i];
+	newstr[n + i] = '\0';
+	return (newstr);
 }

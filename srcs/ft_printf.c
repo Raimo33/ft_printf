@@ -12,14 +12,14 @@
 
 #include "../ft_printf.h"
 
-int	main(void)
-{
-	char *ptr = malloc(42);
-	int return1 = ft_printf("cacca%s", "www");
-	write(1, "\n", 1);
-	//int return2 = printf("%d", 42);
-	//printf("return ft: %d\nreturn real: %d", return1, return2);
-}
+// int	main(void)
+// {
+// 	char *ptr = malloc(42);
+// 	int return1 = ft_printf("%%%%");
+// 	write(1, "\n", 1);
+// 	int return2 = printf("%%%%");
+// 	//printf("return ft: %d\nreturn real: %d", return1, return2);
+// }
 
 int	ft_printf(const char *str, ...)
 {
@@ -31,12 +31,14 @@ int	ft_printf(const char *str, ...)
 	char			*tmp_str;
 	short			is_minus;
 	char			padding_char;
+	int				precision;
 
 	i = 0;
 	output_len = 0;
 	chars_written = 0;
 	is_minus = 0;
 	padding_char = ' ';
+	precision = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
@@ -57,30 +59,38 @@ int	ft_printf(const char *str, ...)
 			str++;
 		}
 		padding = ft_atoi(str);
-		str += nbrlen(padding, 10);
+		if (padding > 0)
+			str += nbrlen(padding, 10);
+		while (*str == '.')
+			str++;
+		precision = ft_atoi(str);
+		if (precision > 0)
+			str += nbrlen(precision, 10);
 		if (*str == 'c')
-			fill_c(args, &tmp_str);
+			tmp_str = fill_c(&args);
 		else if (*str == '%')
 		{
 			padding = 0;
-			fill_percent(&tmp_str);
-		}	
+			tmp_str = ft_strdup("%");
+		}
 		else if (*str == 's')
-			tmp_str = ft_strdup(va_arg(args, char *));
+			tmp_str = fill_s(&args, precision);
 		else if (*str == 'd' || *str == 'i' || *str == 'x' || *str == 'X')
-			fill_dixx(args, &tmp_str, (char *)str);
+			tmp_str = fill_dixx(&args, (char *)str, precision);
 		else if (*str == 'u')
-			tmp_str = ft_itoa_base(va_arg(args, unsigned int), "0123456789");
+			tmp_str = fill_u(&args, precision);
 		else if (*str == 'p')
-			fill_p(args, &tmp_str);
-		output_len = ft_strlen(tmp_str);
+			tmp_str = fill_p(&args);
+		output_len = f_strlen(tmp_str);
 		if (padding > output_len)
 			padding -= output_len;
 		else
 			padding = 0;
 		if (is_minus == 0)
 			chars_written += add_padding((char *)str, padding_char, padding);
-		chars_written += putstr(tmp_str);
+		chars_written += write(1, tmp_str, output_len);
+		if (is_minus == 1)
+			chars_written += add_padding((char *)str, padding_char, padding);
 		free(tmp_str);
 		str++;
 		i = 0;

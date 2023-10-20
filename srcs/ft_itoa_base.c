@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:32:43 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/20 10:59:19 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/20 12:38:26 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_itoa_base(int n, char *base)
 	unsigned int	n_len;
 	unsigned int	base_len;
 
-	base_len = ft_strlen(base);
+	base_len = f_strlen(base);
 	n_len = nbrlen(n, base_len);
 	str = malloc((n_len + 1) * sizeof(char));
 	if (str == NULL)

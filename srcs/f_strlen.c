@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strcpy.c                                           :+:      :+:    :+:   */
+/*   strlen.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 10:11:56 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/20 11:27:59 by craimond         ###   ########.fr       */
+/*   Created: 2023/10/09 11:05:19 by craimond          #+#    #+#             */
+/*   Updated: 2023/10/20 13:01:31 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-char	*ft_strcpy(char *dest, char *src)
+int	f_strlen(char *s)
 {
-	int	i;
+	int	n;
 
-	i = 0;
-	while (*(src + i) != '\0')
-	{
-		*(dest + i) = *(src + i);
-		i++;
-	}
-	*(dest + i) = '\0';
-	return (dest);
+	n = 0;
+	while (s[n])
+		n++;
+	return (n);
 }
