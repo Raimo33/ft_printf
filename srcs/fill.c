@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/20 15:02:13 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:58:12 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ char	*fill_c(va_list *args)
 	return (tmp_str);
 }
 
-char	*fill_s(va_list *args, int precision)
+char	*fill_s(va_list *args, int precision, short is_precision)
 {
 	char *tmp_str;
 
 	tmp_str = ft_strdup(va_arg(*args, char *));
 	if (tmp_str == NULL)
 		return ("(null)");
-	if (precision < f_strlen(tmp_str))
+	if (precision < f_strlen(tmp_str) && is_precision == 1)
 		tmp_str[precision] = '\0';
 	return (tmp_str);
 }

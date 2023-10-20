@@ -16,9 +16,9 @@
 // {
 // 	char *ptr = malloc(42);
 // 	int c;
-// 	int return1 = ft_printf("%-p", &c);
+// 	int return1 = ft_printf("%.0s", "hello");
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%-p", &c);
+// 	int return2 = printf("%.0s", "hello");
 // 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
@@ -33,12 +33,14 @@ int	ft_printf(const char *str, ...)
 	short			is_minus;
 	char			padding_char;
 	int				precision;
+	short			is_precision;
 
 	i = 0;
 	output_len = 0;
 	chars_written = 0;
 	is_minus = 0;
 	padding_char = ' ';
+	is_precision = 0;
 	precision = 0;
 	va_start(args, str);
 	while (*str != '\0')
@@ -63,9 +65,12 @@ int	ft_printf(const char *str, ...)
 		if (padding > 0)
 			str += nbrlen(padding, 10);
 		while (*str == '.')
+		{
+			is_precision = 1;
 			str++;
+		}	
 		precision = ft_atoi(str);
-		if (precision > 0)
+		if (precision > 0 || *str == '0')
 			str += nbrlen(precision, 10);
 		if (*str == 'c')
 			tmp_str = fill_c(&args);
@@ -75,7 +80,7 @@ int	ft_printf(const char *str, ...)
 			tmp_str = ft_strdup("%");
 		}
 		else if (*str == 's')
-			tmp_str = fill_s(&args, precision);
+			tmp_str = fill_s(&args, precision, is_precision);
 		else if (*str == 'd' || *str == 'i' || *str == 'x' || *str == 'X')
 			tmp_str = fill_dixx(&args, (char *)str, precision);
 		else if (*str == 'u')
@@ -99,4 +104,3 @@ int	ft_printf(const char *str, ...)
 	va_end(args);
 	return (chars_written);
 }
-
