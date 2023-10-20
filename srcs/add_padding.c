@@ -12,7 +12,7 @@
 
 #include "../ft_printf.h"
 
-int	add_padding(char *str, char padding_char, int padding)
+int	add_padding(char *str, unsigned int padding)
 {
 	int chars_written;
 
@@ -25,7 +25,7 @@ int	add_padding(char *str, char padding_char, int padding)
 	else
 	{
 		while (padding-- > 0)
-			chars_written += (write(1, &padding_char, 1));
+			chars_written += (write(1, &g_padding_char, 1));
 	}
 	return (chars_written);
 }

@@ -19,7 +19,7 @@ char	*ft_itoa_base(long long n, char *base)
 	unsigned int	base_len;
 
 	base_len = f_strlen(base);
-	n_len = nbrlen(n, base_len);
+	n_len = f_nbrlen(n, base_len);
 	str = malloc((n_len + 1) * sizeof(char));
 	if (str == NULL)
 		return (NULL);
@@ -37,22 +37,4 @@ char	*ft_itoa_base(long long n, char *base)
 		n /= (int)base_len;
 	}
 	return (str);
-}
-
-unsigned int	nbrlen(long long n, unsigned int base)
-{
-	unsigned int	i;
-
-	i = 0;
-	if (n < 0)
-	{
-		n *= -1;
-		i++;
-	}
-	while (n >= 10)
-	{
-		n /= base;
-		i++;
-	}
-	return (i + 1);
 }

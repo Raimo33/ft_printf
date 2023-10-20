@@ -16,8 +16,8 @@ char *precision_str(int precision, long long n, int base)
 {
 	char	*tmp_str1;
 
-	if (precision > (int)nbrlen(n, base))
-		precision -= (int)nbrlen(n, base);
+	if (precision > (int)f_nbrlen(n, base))
+		precision -= (int)f_nbrlen(n, base);
 	else
 		precision = 0;
 	tmp_str1 = malloc(sizeof(char) * (precision + 1));

@@ -22,14 +22,14 @@ char	*fill_c(va_list *args)
 	return (tmp_str);
 }
 
-char	*fill_s(va_list *args, int precision, short is_precision)
+char	*fill_s(va_list *args, int precision)
 {
 	char *tmp_str;
 
 	tmp_str = ft_strdup(va_arg(*args, char *));
 	if (tmp_str == NULL)
 		return ("(null)");
-	if (precision < f_strlen(tmp_str) && is_precision == 1)
+	if (precision < f_strlen(tmp_str) && g_is_precision == 1)
 		tmp_str[precision] = '\0';
 	return (tmp_str);
 }

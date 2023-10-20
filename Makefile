@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libftprintf.a
-SRCS = srcs/ft_printf.c srcs/f_strlen.c srcs/ft_atoi.c srcs/ft_itoa_base.c srcs/ft_strdup.c srcs/add_padding.c srcs/fill.c srcs/ft_strcpy.c srcs/precision_str.c srcs/ft_strjoin.c
+SRCS = srcs/ft_printf.c srcs/f_strlen.c srcs/ft_itoa_base.c srcs/ft_strdup.c srcs/add_padding.c srcs/fill.c srcs/ft_strcpy.c srcs/precision_str.c srcs/ft_strjoin.c srcs/f_nbrlen.c
 OBJS = ${SRCS:.c=.o}
 HEADER = ft_printf.h
 
