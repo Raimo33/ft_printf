@@ -19,13 +19,14 @@ short			g_is_minus;
 short			g_is_precision;
 unsigned char	g_padding_char;
 
+//#include <stdio.h>
 // int	main(void)
 // {
 // 	char *ptr = malloc(42);
 // 	int c;
-// 	int return1 = ft_printf("%6.s", "caca");
+// 	int return1 = ft_printf(" %c ", 42);
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%6.s", "caca");
+// 	int return2 = printf(" %c ", 42);
 // 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
@@ -45,6 +46,8 @@ int	ft_printf(const char *str, ...)
 	while (*str != '\0')
 	{
 		str += until_identifier(&chars_written, &padding, &precision, str);
+		if (*str == '\0')
+			break ;
 		chars_written += handle_identifier(&args, str, precision, &padding);
 		str++;
 	}
@@ -52,30 +55,30 @@ int	ft_printf(const char *str, ...)
 	return (chars_written);
 }
 
-static int until_identifier(unsigned int *chars_written, unsigned int *padding, unsigned int *precision, const char *str)		
+static int	until_identifier(unsigned int *chars_written, unsigned int *padding, unsigned int *precision, const char *str)		
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i] != '%' && str[i] != '\0')
+	i = 0;
+	while (str[i] != '%' && str[i] != '\0')
 		*chars_written += write(1, &str[i++], 1);
 	if (str[i] == '\0')
-        return (i);
+		return (i);
 	while (str[++i] == '-')
 		g_is_minus = 1;
-    i--;
+	i--;
 	while (str[++i] == '0')
 		g_padding_char = '0';
 	*padding = f_atoi(str + i);
 	if (*padding > 0)
 		i += f_nbrlen(*padding, 10);
-    i--;
+	i--;
 	while (str[++i] == '.')
 		g_is_precision = 1;
 	*precision = f_atoi(str + i);
 	if (*precision > 0 || str[i] == '0')
 		i += f_nbrlen(*precision, 10);
-    return (i);
+	return (i);
 }
 
 static unsigned int	handle_identifier(va_list *args, const char *str, unsigned int precision, unsigned int *padding)

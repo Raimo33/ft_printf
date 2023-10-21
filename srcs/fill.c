@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/20 15:58:12 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 11:09:03 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*fill_c(va_list *args)
 {
-	char *tmp_str;
+	char	*tmp_str;
 
 	tmp_str = malloc(sizeof(char) * 2);
 	tmp_str[0] = (unsigned char)va_arg(*args, int);
@@ -24,7 +24,7 @@ char	*fill_c(va_list *args)
 
 char	*fill_s(va_list *args, int precision, short is_precision)
 {
-	char *tmp_str;
+	char	*tmp_str;
 
 	tmp_str = ft_strdup(va_arg(*args, char *));
 	if (tmp_str == NULL)
@@ -36,9 +36,9 @@ char	*fill_s(va_list *args, int precision, short is_precision)
 
 char	*fill_u(va_list *args, int precision)
 {
-	unsigned int n;
-	char		*tmp_str;
-	
+	unsigned int	n;
+	char			*tmp_str;
+
 	n = va_arg(*args, unsigned int);
 	tmp_str = ft_itoa_base(n, "0123456789");
 	return (ft_strjoin(precision_str(precision, n, 10), tmp_str));
@@ -71,10 +71,10 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 
 char	*fill_p(va_list *args)
 {
-	void *p;
-	char *s;
-	char *tmp_str;
-	
+	void	*p;
+	char	*s;
+	char	*tmp_str;
+
 	p = va_arg(*args, void *);
 	if (p == NULL)
 		tmp_str = "(nil)";

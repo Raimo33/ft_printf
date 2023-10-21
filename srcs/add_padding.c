@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 10:29:36 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 11:06:46 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	add_padding(char *str, unsigned int padding, unsigned char padding_char)
 {
-	int chars_written;
+	int	chars_written;
 
 	chars_written = 0;
 	if (*str == 'p' || *str == 'c' || *str == 's')
