@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:32:43 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 15:30:22 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 16:45:27 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,27 @@ char	*ft_itoa_base(long long n, char *base)
 		n *= -1;
 		str[0] = '-';
 	}
+	str[n_len] = '\0';
+	while (n > 0)
+	{
+		str[n_len-- - 1] = base[n % (int)base_len];
+		n /= (int)base_len;
+	}
+	return (str);
+}
+char	*ft_utoa_base(unsigned long long n, char *base)
+{
+	char			*str;
+	unsigned int	n_len;
+	unsigned int	base_len;
+
+	base_len = f_strlen(base);
+	n_len = f_unbrlen(n, base_len);	
+	str = malloc((n_len + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	if (n == 0)
+		str[0] = '0';
 	str[n_len] = '\0';
 	while (n > 0)
 	{

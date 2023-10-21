@@ -19,15 +19,15 @@ short			g_is_minus;
 short			g_is_precision;
 unsigned char	g_padding_char;
 
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	int c;
-// 	int return1 = ft_printf(" %p ", 15);
-// 	write(1, "\n", 1);
-// 	int return2 = printf(" %p ", 15);
-// 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
-// }
+#include <stdio.h>
+int	main(void)
+{
+	int c;
+	int return1 = ft_printf(" %04d ", -14);
+	write(1, "\n", 1);
+	int return2 = printf(" %04d ", -14);
+	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+}
 
 int	ft_printf(const char *str, ...)
 {
@@ -85,11 +85,12 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 	char			*tmp_str;
 	unsigned int	output_len;
 	unsigned int	chars_written;
+	unsigned char	c;
 
 	tmp_str = NULL;
 	chars_written = 0;
 	if (*str == 'c')
-		tmp_str = fill_c(args);
+		output_len = 1;
 	else if (*str == '%')
 		tmp_str = ft_strdup("%");
 	else if (*str == 's')
@@ -100,14 +101,21 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 		tmp_str = fill_u(args, precision);
 	else if (*str == 'p')
 		tmp_str = fill_p(args);
-	output_len = f_strlen(tmp_str);
+	if (*str != 'c')
+		output_len = f_strlen(tmp_str);
 	if (*padding > output_len && *str != '%')
 		*padding -= output_len;
 	else
 		*padding = 0;
 	if (g_is_minus == 0)
 		chars_written += add_padding((char *)str, *padding, g_padding_char);
-	chars_written += write(1, tmp_str, output_len);
+	if (*str != 'c')
+		chars_written += write(1, tmp_str, output_len);
+	else
+	{
+		c = va_arg(*args, int);
+		chars_written += write(1, &c, 1);
+	}	
 	if (g_is_minus == 1)
 		chars_written += add_padding((char *)str, *padding, g_padding_char);
 	free(tmp_str);

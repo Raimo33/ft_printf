@@ -6,21 +6,11 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 15:33:19 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:06:49 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
-
-char	*fill_c(va_list *args)
-{
-	char	*tmp_str;
-
-	tmp_str = malloc(sizeof(char) * 2);
-	tmp_str[0] = (unsigned char)va_arg(*args, int);
-	tmp_str[1] = '\0';
-	return (tmp_str);
-}
 
 char	*fill_s(va_list *args, int precision, short is_precision)
 {
@@ -64,12 +54,12 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 	}
 	else if (*str == 'x')
 	{
-		tmp_str = ft_itoa_base(n, "0123456789abcdef");
+		tmp_str = ft_utoa_base((unsigned int)n, "0123456789abcdef");
 		new_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
 	}
 	else if (*str == 'X')
 	{
-		tmp_str = ft_itoa_base(n, "0123456789ABCDEF");
+		tmp_str = ft_utoa_base((unsigned int)n, "0123456789ABCDEF");
 		new_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
 	}
 	else
@@ -80,16 +70,16 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 
 char	*fill_p(va_list *args)
 {
-	uintptr_t	p;
+	long long	p;
 	char		*s;
 	char		*tmp_str;
 
-	p = (uintptr_t)va_arg(*args, void *);
+	p = (unsigned long long)va_arg(*args, void *);
 	if (p == 0)
 		return (ft_strdup("(nil)"));
 	else
 	{
-		s = ft_itoa_base(p, "0123456789abcdef");
+		s = ft_utoa_base(p, "0123456789abcdef");
 		tmp_str = malloc(sizeof(char) * (f_strlen(s) + 3));
 		tmp_str[0] = '0';
 		tmp_str[1] = 'x';

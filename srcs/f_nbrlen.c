@@ -12,7 +12,25 @@
 
 #include "../ft_printf.h"
 
-unsigned int	f_nbrlen(long long n, unsigned int base)
+unsigned short	f_nbrlen(long long n, unsigned int base)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (n < 0)
+	{
+		n *= -1;
+		i++;
+	}
+	while (n >= base)
+	{
+		n /= base;
+		i++;
+	}
+	return (i + 1);
+}
+
+unsigned short	f_unbrlen(unsigned long long n, unsigned int base)
 {
 	unsigned int	i;
 
