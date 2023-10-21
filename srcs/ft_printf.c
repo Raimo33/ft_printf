@@ -23,9 +23,9 @@ unsigned char	g_padding_char;
 // {
 // 	char *ptr = malloc(42);
 // 	int c;
-// 	int return1 = ft_printf("%5.3d", 42);
+// 	int return1 = ft_printf("%6.s", "caca");
 // 	write(1, "\n", 1);
-// 	//int return2 = printf("%.0s", "hello");
+// 	int return2 = printf("%6.s", "caca");
 // 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
@@ -84,6 +84,7 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 	unsigned int	output_len;
 	unsigned int	chars_written;
 
+	tmp_str = NULL;
 	chars_written = 0;
 	if (*str == 'c')
 		tmp_str = fill_c(args);
