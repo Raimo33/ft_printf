@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 11:47:58 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 12:08:20 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*fill_s(va_list *args, int precision, short is_precision)
 	if (tmp_str == NULL)
 	{
 		free(tmp_str);
-		return ("(null)");
+		return (ft_strdup("(null)"));
 	}
 	if (precision < f_strlen(tmp_str) && is_precision == 1)
 		tmp_str[precision] = '\0';
@@ -86,7 +86,7 @@ char	*fill_p(va_list *args)
 
 	p = va_arg(*args, void *);
 	if (p == NULL)
-		return ("(nil)");
+		return (ft_strdup("(nil)"));
 	else
 	{
 		s = ft_itoa_base((long long)p, "0123456789abcdef");

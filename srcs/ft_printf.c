@@ -19,14 +19,13 @@ short			g_is_minus;
 short			g_is_precision;
 unsigned char	g_padding_char;
 
-//#include <stdio.h>
+// #include <stdio.h>
 // int	main(void)
 // {
-// 	char *ptr = malloc(42);
 // 	int c;
-// 	int return1 = ft_printf(" %c ", 42);
+// 	int return1 = ft_printf(" %s ", NULL);
 // 	write(1, "\n", 1);
-// 	int return2 = printf(" %c ", 42);
+// 	int return2 = printf(" %s ", NULL);
 // 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
