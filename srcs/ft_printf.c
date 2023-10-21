@@ -23,10 +23,10 @@ unsigned char	g_padding_char;
 int	main(void)
 {
 	int c;
-	int return1 = ft_printf(" %04d ", -14);
+	//int return1 = ft_printf("%-1d", -14);
 	write(1, "\n", 1);
-	int return2 = printf(" %04d ", -14);
-	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+	int return2 = printf("%-1d", -14);
+	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 }
 
 int	ft_printf(const char *str, ...)
@@ -108,16 +108,16 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 	else
 		*padding = 0;
 	if (g_is_minus == 0)
-		chars_written += add_padding((char *)str, *padding, g_padding_char);
+		chars_written += add_padding((char *)str, *padding, g_padding_char, &tmp_str);
 	if (*str != 'c')
-		chars_written += write(1, tmp_str, output_len);
+		chars_written += write(1, tmp_str, f_strlen(tmp_str));
 	else
 	{
 		c = va_arg(*args, int);
 		chars_written += write(1, &c, 1);
 	}	
 	if (g_is_minus == 1)
-		chars_written += add_padding((char *)str, *padding, g_padding_char);
+		chars_written += add_padding((char *)str, *padding, g_padding_char, NULL);
 	free(tmp_str);
 	return (chars_written);
 }

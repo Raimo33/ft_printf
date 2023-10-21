@@ -6,12 +6,12 @@
 #    By: craimond <craimond@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/16 10:29:01 by craimond          #+#    #+#              #
-#    Updated: 2023/10/21 10:25:28 by craimond         ###   ########.fr        #
+#    Updated: 2023/10/21 17:25:52 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-SRCS = srcs/ft_printf.c srcs/f_strlen.c srcs/ft_itoa_base.c srcs/ft_strdup.c srcs/add_padding.c srcs/fill.c srcs/ft_strcpy.c srcs/precision_str.c srcs/ft_strjoin.c srcs/f_nbrlen.c srcs/f_atoi.c
+SRCS = srcs/ft_printf.c srcs/f_strlen.c srcs/ft_itoa_base.c srcs/ft_strdup.c srcs/add_padding.c srcs/fill.c srcs/ft_strcpy.c srcs/precision_str.c srcs/ft_strjoin.c srcs/f_nbrlen.c srcs/f_atoi.c srcs/ft_strtrim.c
 OBJS = ${SRCS:.c=.o}
 HEADER = ft_printf.h
 
