@@ -22,7 +22,7 @@ unsigned int	f_nbrlen(long long n, unsigned int base)
 		n *= -1;
 		i++;
 	}
-	while (n >= 10)
+	while (n >= base)
 	{
 		n /= base;
 		i++;

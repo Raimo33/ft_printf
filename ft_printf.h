@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 11:53:38 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 11:08:10 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 15:26:03 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdlib.h>
+# include <stdint.h>
 
 int				ft_printf(const char *str, ...);
 char			*fill_c(va_list *args);

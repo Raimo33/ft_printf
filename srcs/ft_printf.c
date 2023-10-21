@@ -23,10 +23,10 @@ unsigned char	g_padding_char;
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf(" %s ", NULL);
+// 	int return1 = ft_printf(" %p ", 15);
 // 	write(1, "\n", 1);
-// 	int return2 = printf(" %s ", NULL);
-// 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+// 	int return2 = printf(" %p ", 15);
+// 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
 int	ft_printf(const char *str, ...)

@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 12:08:20 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 15:33:19 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,16 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 
 char	*fill_p(va_list *args)
 {
-	void	*p;
-	char	*s;
-	char	*tmp_str;
+	uintptr_t	p;
+	char		*s;
+	char		*tmp_str;
 
-	p = va_arg(*args, void *);
-	if (p == NULL)
+	p = (uintptr_t)va_arg(*args, void *);
+	if (p == 0)
 		return (ft_strdup("(nil)"));
 	else
 	{
-		s = ft_itoa_base((long long)p, "0123456789abcdef");
+		s = ft_itoa_base(p, "0123456789abcdef");
 		tmp_str = malloc(sizeof(char) * (f_strlen(s) + 3));
 		tmp_str[0] = '0';
 		tmp_str[1] = 'x';

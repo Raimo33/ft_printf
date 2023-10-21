@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 17:12:17 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/19 23:49:01 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 14:20:00 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_strdup(char *src)
 		return (NULL);
 	i = 0;
 	size = get_size(src);
-	copiedstr = (char *) malloc(size);
+	copiedstr = (char *) malloc(sizeof(char) * (size + 1));
 	if (sizeof(copiedstr) < sizeof(src))
 		return (0);
 	while (src[i])

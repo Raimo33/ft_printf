@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:42:58 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/20 14:28:16 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/21 14:30:14 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	while (s2[++i] != '\0')
 		newstr[n + i] = s2[i];
 	newstr[n + i] = '\0';
+	free((void *)s1);
 	return (newstr);
 }
