@@ -17,16 +17,17 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 
 short			g_is_minus;
 short			g_is_precision;
+short			g_is_space;
 unsigned char	g_padding_char;
 
 #include <stdio.h>
 int	main(void)
 {
 	int c;
-	//int return1 = ft_printf("%-1d", -14);
+	int return1 = ft_printf(" % d ", 101);
 	write(1, "\n", 1);
-	int return2 = printf("%-1d", -14);
-	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+	int return2 = printf(" % d ", 101);
+	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 }
 
 int	ft_printf(const char *str, ...)
@@ -41,6 +42,7 @@ int	ft_printf(const char *str, ...)
 	g_is_minus = 0;
 	g_padding_char = ' ';
 	g_is_precision = 0;
+	g_is_space = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
@@ -63,14 +65,23 @@ static int	until_identifier(unsigned int *chars_written, unsigned int *padding, 
 		*chars_written += write(1, &str[i++], 1);
 	if (str[i] == '\0')
 		return (i);
-	while (str[++i] == '-')
-		g_is_minus = 1;
-	i--;
-	while (str[++i] == '0')
-		g_padding_char = '0';
+	i++;
+	while (str[i] == '-' || str[i] == '0' || str[i] == ' ')
+	{
+		if (str[i] == '-')
+			g_is_minus = 1;
+		if (str[i] == '0')
+			g_padding_char = '0';
+		if (str[i++] == ' ')
+			g_is_space = 1;
+	}
+	if (g_is_minus == 1)
+		g_padding_char = ' ';
 	*padding = f_atoi(str + i);
 	if (*padding > 0)
 		i += f_nbrlen(*padding, 10);
+	else if (g_is_space == 1)
+		*padding += 1;
 	i--;
 	while (str[++i] == '.')
 		g_is_precision = 1;

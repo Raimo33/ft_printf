@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 17:37:51 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/22 16:58:09 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	add_padding(char *str, unsigned int padding, unsigned char padding_char, cha
 	}
 	else
 	{
-		if (*tmp_str[0] == '-')
+		if (tmp_str != NULL && *tmp_str[0] == '-')
 		{
 			chars_written += write (1, "-", 1);
 			tmp_str1 = ft_strdup(*tmp_str);
