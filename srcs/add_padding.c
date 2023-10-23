@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 12:26:24 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:17:43 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	add_padding(char *str, unsigned int padding, unsigned char padding_char, char **tmp_str)
 {
 	int		chars_written;
-	char 	*tmp_str1;
+	char	*tmp_str1;
 	char	*tmp_str2;
 
 	chars_written = 0;

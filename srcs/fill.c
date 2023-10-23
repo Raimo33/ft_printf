@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 12:43:09 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:16:52 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 	int		n;
 	char	*tmp_str;
 	char	*new_str;
-	char 	*newest_str;
+	char	*newest_str;
 
 	n = va_arg(*args, int);
-	if (*str == 'd' || *str == 'i') //da separare in altra funzione
+	if (*str == 'd' || *str == 'i')
 	{
 		tmp_str = ft_itoa_base(n, "0123456789");
 		new_str = ft_strjoin(precision_str(precision, n, 10), tmp_str + (n < 0));
@@ -63,12 +63,12 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 	else if (*str == 'x')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789abcdef");
-		newest_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
+		newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
 	}
 	else if (*str == 'X')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789ABCDEF");
-		newest_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
+		newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
 	}
 	else
 		return (NULL);
