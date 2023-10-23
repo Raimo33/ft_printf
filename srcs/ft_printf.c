@@ -24,9 +24,9 @@ unsigned char	g_padding_char;
 int	main(void)
 {
 	int c;
-	int return1 = ft_printf(" % d ", 101);
+	int return1 = ft_printf(" % d ", 0);
 	write(1, "\n", 1);
-	int return2 = printf(" % d ", 101);
+	int return2 = printf(" % d ", 0);
 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 }
 
@@ -81,7 +81,7 @@ static int	until_identifier(unsigned int *chars_written, unsigned int *padding, 
 	if (*padding > 0)
 		i += f_nbrlen(*padding, 10);
 	else if (g_is_space == 1)
-		*padding += 1;
+		*padding = 1;
 	i--;
 	while (str[++i] == '.')
 		g_is_precision = 1;

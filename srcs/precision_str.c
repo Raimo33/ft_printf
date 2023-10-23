@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:17:56 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 17:05:11 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:15:37 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ char	*precision_str(int precision, long long n, int base)
 {
 	char	*tmp_str1;
 
-	if (precision > (int)f_nbrlen(n, base))
-		precision -= (int)f_nbrlen(n, base);
+	if (precision > (int)f_nbrlen(n, base) - (n < 0))
+		precision -= (int)f_nbrlen(n, base) - (n < 0);
 	else
 		precision = 0;
 	tmp_str1 = malloc(sizeof(char) * (precision + 1));

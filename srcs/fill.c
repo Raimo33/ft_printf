@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 17:06:49 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:43:09 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,35 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 	int		n;
 	char	*tmp_str;
 	char	*new_str;
+	char 	*newest_str;
 
 	n = va_arg(*args, int);
-	if (*str == 'd' || *str == 'i')
+	if (*str == 'd' || *str == 'i') //da separare in altra funzione
 	{
 		tmp_str = ft_itoa_base(n, "0123456789");
-		new_str = ft_strjoin(precision_str(precision, n, 10), tmp_str);
+		new_str = ft_strjoin(precision_str(precision, n, 10), tmp_str + (n < 0));
+		if (n < 0)
+		{
+			newest_str = ft_strjoin(ft_strdup("-"), new_str);
+			free(new_str);
+		}
+		else
+			newest_str = new_str;
 	}
 	else if (*str == 'x')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789abcdef");
-		new_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
+		newest_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
 	}
 	else if (*str == 'X')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789ABCDEF");
-		new_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
+		newest_str = ft_strjoin(precision_str(precision, n, 16), tmp_str);
 	}
 	else
 		return (NULL);
 	free(tmp_str);
-	return (new_str);
+	return (newest_str);
 }
 
 char	*fill_p(va_list *args)
