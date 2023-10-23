@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 11:53:38 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/21 17:21:48 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:59:03 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 int				ft_printf(const char *str, ...);
 char			*fill_c(va_list *args);
-char			*fill_dixx(va_list *args, const char *str, int precision);
+char			*fill_dixx(va_list *args, const char *str, int precision, short is_hash);
 char			*fill_p(va_list *args);
 char			*fill_s(va_list *args, int precision, short is_precision);
 char			*fill_u(va_list *args, int precision);

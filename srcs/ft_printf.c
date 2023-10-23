@@ -18,17 +18,18 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 static short			g_is_minus;
 static short			g_is_precision;
 static short			g_is_space;
+static short			g_is_hash;
 static unsigned char	g_padding_char;
 
-#include <stdio.h>
-int	main(void)
-{
-	int c;
-	int return1 = ft_printf("% p", &c);
-	write(1, "\n", 1);
-	int return2 = printf("% p", &c);
-	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
-}
+// #include <stdio.h>
+// int	main(void)
+// {
+// 	int c;
+// 	int return1 = ft_printf(" %#x ", LONG_MIN);
+// 	write(1, "\n", 1);
+// 	int return2 = printf(" %#x ", LONG_MIN);
+// 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+// }
 
 int	ft_printf(const char *str, ...)
 {
@@ -43,6 +44,7 @@ int	ft_printf(const char *str, ...)
 	g_padding_char = ' ';
 	g_is_precision = 0;
 	g_is_space = 0;
+	g_is_hash = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
@@ -65,15 +67,16 @@ static int	until_identifier(unsigned int *chars_written, unsigned int *padding, 
 		*chars_written += write(1, &str[i++], 1);
 	if (str[i] == '\0')
 		return (i);
-	i++;
-	while (str[i] == '-' || str[i] == '0' || str[i] == ' ')
+	while (str[++i] == '-' || str[i] == '0' || str[i] == ' ' || str[i] == '#')
 	{
 		if (str[i] == '-')
 			g_is_minus = 1;
 		if (str[i] == '0')
 			g_padding_char = '0';
-		if (str[i++] == ' ')
+		if (str[i] == ' ')
 			g_is_space = 1;
+		if (str[i] == '#')
+			g_is_hash = 1;
 	}
 	if (g_is_minus == 1)
 		g_padding_char = ' ';
@@ -105,7 +108,7 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 	else if (*str == 's')
 		tmp_str = fill_s(args, precision, g_is_precision);
 	else if (*str == 'd' || *str == 'i' || *str == 'x' || *str == 'X')
-		tmp_str = fill_dixx(args, str, precision);
+		tmp_str = fill_dixx(args, str, precision, g_is_hash);
 	else if (*str == 'u')
 		tmp_str = fill_u(args, precision);
 	else if (*str == 'p')

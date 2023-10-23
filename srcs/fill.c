@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 15:16:52 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:54:04 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*fill_u(va_list *args, int precision)
 	return (new_str);
 }
 
-char	*fill_dixx(va_list *args, const char *str, int precision)
+char	*fill_dixx(va_list *args, const char *str, int precision, short is_hash)
 {
 	int		n;
 	char	*tmp_str;
@@ -63,12 +63,26 @@ char	*fill_dixx(va_list *args, const char *str, int precision)
 	else if (*str == 'x')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789abcdef");
-		newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
+		if (is_hash == 1 && (unsigned int)n != 0)
+		{
+			new_str = ft_strjoin(ft_strdup("0x"), tmp_str);
+			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), new_str);
+			free(new_str);
+		}
+		else	
+			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
 	}
 	else if (*str == 'X')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789ABCDEF");
-		newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
+		if (is_hash == 1 && (unsigned int)n != 0)
+		{
+			new_str = ft_strjoin(ft_strdup("0X"), tmp_str);
+			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), new_str);
+			free(new_str);
+		}
+		else
+			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
 	}
 	else
 		return (NULL);
