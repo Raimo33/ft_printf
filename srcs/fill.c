@@ -6,13 +6,13 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 16:54:04 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:30:37 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-char	*fill_s(va_list *args, int precision, short is_precision)
+char	*fill_s(va_list *args, int precision, flags *f)
 {
 	char	*tmp_str;
 
@@ -22,7 +22,7 @@ char	*fill_s(va_list *args, int precision, short is_precision)
 		free(tmp_str);
 		return (ft_strdup("(null)"));
 	}
-	if (precision < f_strlen(tmp_str) && is_precision == 1)
+	if (precision < f_strlen(tmp_str) && (*f).is_precision == 1)
 		tmp_str[precision] = '\0';
 	return (tmp_str);
 }
@@ -40,7 +40,7 @@ char	*fill_u(va_list *args, int precision)
 	return (new_str);
 }
 
-char	*fill_dixx(va_list *args, const char *str, int precision, short is_hash)
+char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
 {
 	int		n;
 	char	*tmp_str;
@@ -63,7 +63,7 @@ char	*fill_dixx(va_list *args, const char *str, int precision, short is_hash)
 	else if (*str == 'x')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789abcdef");
-		if (is_hash == 1 && (unsigned int)n != 0)
+		if ((*f).is_hash == 1 && (unsigned int)n != 0 && (*f).padding_char == ' ')
 		{
 			new_str = ft_strjoin(ft_strdup("0x"), tmp_str);
 			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), new_str);
@@ -75,7 +75,7 @@ char	*fill_dixx(va_list *args, const char *str, int precision, short is_hash)
 	else if (*str == 'X')
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789ABCDEF");
-		if (is_hash == 1 && (unsigned int)n != 0)
+		if ((*f).is_hash == 1 && (unsigned int)n != 0 && (*f).padding_char == ' ')
 		{
 			new_str = ft_strjoin(ft_strdup("0X"), tmp_str);
 			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), new_str);

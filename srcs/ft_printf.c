@@ -12,87 +12,84 @@
 
 #include "../ft_printf.h"
 
-static int			until_identifier(unsigned int *chars_written, unsigned int *padding, unsigned int *precision, const char *str);
-static unsigned int	handle_identifier(va_list *args, const char *str, unsigned int precision, unsigned int *padding);
-
-static short			g_is_minus;
-static short			g_is_precision;
-static short			g_is_space;
-static short			g_is_hash;
-static unsigned char	g_padding_char;
+static int			until_identifier(struct flags *f, unsigned int *padding, unsigned int *precision, const char *str);
+static unsigned int	handle_identifier(struct flags *f, va_list *args, const char *str, unsigned int precision, unsigned int *padding);
 
 // #include <stdio.h>
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf(" %#x ", LONG_MIN);
+// 	int return1 = ft_printf(" %#0x ", 2);
 // 	write(1, "\n", 1);
-// 	int return2 = printf(" %#x ", LONG_MIN);
+// 	int return2 = printf(" %#0x ", 2);
 // 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
 int	ft_printf(const char *str, ...)
 {
 	va_list			args;
-	unsigned int	chars_written;
+	flags			f;
 	unsigned int	precision;
 	unsigned int	padding;
 
-	chars_written = 0;
+	f.chars_written = 0;
 	precision = 0;
-	g_is_minus = 0;
-	g_padding_char = ' ';
-	g_is_precision = 0;
-	g_is_space = 0;
-	g_is_hash = 0;
+	f.is_minus = 0;
+	f.padding_char = ' ';
+	f.is_precision = 0;
+	f.is_space = 0;
+	f.is_hash = 0;
+	f.is_plus = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
-		str += until_identifier(&chars_written, &padding, &precision, str);
+		str += until_identifier(&f, &padding, &precision, str);
 		if (*str == '\0')
 			break ;
-		chars_written += handle_identifier(&args, str, precision, &padding);
+		f.chars_written += handle_identifier(&f, &args, str, precision, &padding);
 		str++;
 	}
 	va_end(args);
-	return (chars_written);
+	return (f.chars_written);
 }
 
-static int	until_identifier(unsigned int *chars_written, unsigned int *padding, unsigned int *precision, const char *str)
+static int	until_identifier(flags *f, unsigned int *padding, unsigned int *precision, const char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i] != '%' && str[i] != '\0')
-		*chars_written += write(1, &str[i++], 1);
+		(*f).chars_written += write(1, &str[i++], 1);
 	if (str[i] == '\0')
 		return (i);
-	while (str[++i] == '-' || str[i] == '0' || str[i] == ' ' || str[i] == '#')
+	while (str[++i] == '-' || str[i] == '0' || str[i] == ' ' || str[i] == '#' || str[i] == '+') //questa roba separarla in una funzione (checkflags)
 	{
 		if (str[i] == '-')
-			g_is_minus = 1;
+			(*f).is_minus = 1;
 		if (str[i] == '0')
-			g_padding_char = '0';
+			(*f).padding_char = '0';
 		if (str[i] == ' ')
-			g_is_space = 1;
+			(*f).is_space = 1;
 		if (str[i] == '#')
-			g_is_hash = 1;
+			(*f).is_hash = 1;
+		if (str[i] == '+')
+			(*f).is_plus = 1;
 	}
-	if (g_is_minus == 1)
-		g_padding_char = ' ';
+	if ((*f).is_minus == 1)
+		(*f).padding_char = ' ';
 	*padding = f_atoi(str + i);
 	if (*padding > 0)
 		i += f_nbrlen(*padding, 10);
 	i--;
 	while (str[++i] == '.')
-		g_is_precision = 1;
+		(*f).is_precision = 1;
 	*precision = f_atoi(str + i);
 	if (*precision > 0 || str[i] == '0')
 		i += f_nbrlen(*precision, 10);
 	return (i);
 }
 
-static unsigned int	handle_identifier(va_list *args, const char *str, unsigned int precision, unsigned int *padding)
+static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, unsigned int precision, unsigned int *padding)
 {
 	char			*tmp_str;
 	unsigned int	output_len;
@@ -106,9 +103,9 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 	else if (*str == '%')
 		tmp_str = ft_strdup("%");
 	else if (*str == 's')
-		tmp_str = fill_s(args, precision, g_is_precision);
+		tmp_str = fill_s(args, precision, f);
 	else if (*str == 'd' || *str == 'i' || *str == 'x' || *str == 'X')
-		tmp_str = fill_dixx(args, str, precision, g_is_hash);
+		tmp_str = fill_dixx(args, str, precision, f);
 	else if (*str == 'u')
 		tmp_str = fill_u(args, precision);
 	else if (*str == 'p')
@@ -119,15 +116,15 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 		*padding -= output_len;
 	else
 		*padding = 0;
-	if (*padding == 0 && g_is_space == 1 && *str != 's' && *str != 'c')
+	if (*padding == 0 && (*f).is_space == 1 && *str != 's' && *str != 'c')
 	{
 		if (tmp_str[0] == '-' && f_strlen(tmp_str) < 2)
 			chars_written += write(1, " ", 1);
 		else if (tmp_str[0] != '-')
 			chars_written += write(1, " ", 1);
 	}
-	if (g_is_minus == 0)
-		chars_written += add_padding((char *)str, *padding, g_padding_char, &tmp_str);
+	if ((*f).is_minus == 0)
+		chars_written += add_padding((char *)str, *padding, &tmp_str, f);
 	if (*str != 'c')
 		chars_written += write(1, tmp_str, f_strlen(tmp_str));
 	else
@@ -135,8 +132,8 @@ static unsigned int	handle_identifier(va_list *args, const char *str, unsigned i
 		c = va_arg(*args, int);
 		chars_written += write(1, &c, 1);
 	}	
-	if (g_is_minus == 1)
-		chars_written += add_padding((char *)str, *padding, g_padding_char, NULL);
+	if ((*f).is_minus == 1)
+		chars_written += add_padding((char *)str, *padding, NULL, f);
 	free(tmp_str);
 	return (chars_written);
 }

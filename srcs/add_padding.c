@@ -6,13 +6,13 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 15:17:43 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:27:46 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int	add_padding(char *str, unsigned int padding, unsigned char padding_char, char **tmp_str)
+int	add_padding(char *str, unsigned int padding, char **tmp_str, struct flags *f)
 {
 	int		chars_written;
 	char	*tmp_str1;
@@ -25,7 +25,7 @@ int	add_padding(char *str, unsigned int padding, unsigned char padding_char, cha
 			chars_written += (write(1, " ", 1));
 	}
 	else
-	{
+	{	
 		if (tmp_str != NULL && *tmp_str[0] == '-')
 		{
 			chars_written += write (1, "-", 1);
@@ -35,8 +35,17 @@ int	add_padding(char *str, unsigned int padding, unsigned char padding_char, cha
 			*tmp_str = tmp_str2;
 			free(tmp_str1);
 		}
+		if ((*f).is_hash == 1 && (*str == 'x' || *str == 'X') && (*f).padding_char == '0')
+		{
+			if (*str == 'x')
+				chars_written += write(1, "0x", 2);
+			else if (*str == 'X')
+				chars_written += write(1, "0X", 2);
+			if (padding > 2)
+				padding -= 2;
+		}
 		while (padding-- > 0)
-			chars_written += write(1, &padding_char, 1);
+			chars_written += write(1, &(*f).padding_char, 1);
 	}
 	return (chars_written);
 }
