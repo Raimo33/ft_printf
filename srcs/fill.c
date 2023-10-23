@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 18:30:37 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:06:48 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,16 @@ char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
 			free(new_str);
 		}
 		else
-			newest_str = new_str;
+		{
+			if ((*f).is_plus == 1 && (*f).padding_char == ' ')
+			{
+				newest_str = ft_strjoin(ft_strdup("+"), new_str);
+				free(new_str);
+			}
+			else
+				newest_str = new_str;
+		}
+		
 	}
 	else if (*str == 'x')
 	{

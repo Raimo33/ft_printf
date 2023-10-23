@@ -19,10 +19,10 @@ static unsigned int	handle_identifier(struct flags *f, va_list *args, const char
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf(" %#0x ", 2);
+// 	int return1 = ft_printf("%+050d", -243);
 // 	write(1, "\n", 1);
-// 	int return2 = printf(" %#0x ", 2);
-// 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+// 	int return2 = printf("%+050d", -243);
+// 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
 int	ft_printf(const char *str, ...)

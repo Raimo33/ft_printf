@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 18:27:46 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/23 21:57:39 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	add_padding(char *str, unsigned int padding, char **tmp_str, struct flags *f
 	}
 	else
 	{	
-		if (tmp_str != NULL && *tmp_str[0] == '-')
+		if (tmp_str != NULL && *tmp_str[0] == '-' && (*f).padding_char == '0')
 		{
 			chars_written += write (1, "-", 1);
 			tmp_str1 = ft_strdup(*tmp_str);
@@ -35,7 +35,7 @@ int	add_padding(char *str, unsigned int padding, char **tmp_str, struct flags *f
 			*tmp_str = tmp_str2;
 			free(tmp_str1);
 		}
-		if ((*f).is_hash == 1 && (*str == 'x' || *str == 'X') && (*f).padding_char == '0')
+		else if ((*f).is_hash == 1 && (*str == 'x' || *str == 'X') && (*f).padding_char == '0')
 		{
 			if (*str == 'x')
 				chars_written += write(1, "0x", 2);
@@ -43,6 +43,12 @@ int	add_padding(char *str, unsigned int padding, char **tmp_str, struct flags *f
 				chars_written += write(1, "0X", 2);
 			if (padding > 2)
 				padding -= 2;
+		}
+		else if ((*f).is_plus == 1 && (*str == 'i' || *str == 'd') && (*f).padding_char == '0')
+		{
+			chars_written += write(1, "+", 1);
+			if (padding > 1)
+				padding -= 1;
 		}
 		while (padding-- > 0)
 			chars_written += write(1, &(*f).padding_char, 1);
