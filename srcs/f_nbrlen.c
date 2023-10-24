@@ -14,36 +14,23 @@
 
 unsigned short	f_nbrlen(long long n, unsigned int base)
 {
-	unsigned int	i;
+	short	i;
 
 	i = 0;
-	if (n < 0)
-	{
+	if (n < 0 && i++ >= 0)
 		n *= -1;
-		i++;
-	}
-	while (n >= base)
-	{
+	i--;
+	while (n >= base && ++i >= 0)
 		n /= base;
-		i++;
-	}
-	return (i + 1);
+	return ((unsigned short)(i + 1));
 }
 
 unsigned short	f_unbrlen(unsigned long long n, unsigned int base)
 {
-	unsigned int	i;
+	short	i;
 
-	i = 0;
-	if (n < 0)
-	{
-		n *= -1;
-		i++;
-	}
-	while (n >= base)
-	{
+	i = -1;
+	while (n >= base && ++i >= 0)
 		n /= base;
-		i++;
-	}
-	return (i + 1);
+	return ((unsigned short)(i + 1));
 }

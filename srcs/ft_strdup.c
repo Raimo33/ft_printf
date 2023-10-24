@@ -42,7 +42,7 @@ static int	get_size(char *src)
 	int	n;
 
 	n = 0;
-	while (*(src + n))
+	while (src[n]))
 		n++;
 	return (n);
 }
