@@ -98,8 +98,9 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 
 	tmp_str = NULL;
 	chars_written = 0;
+	//////////////////////////////////////////////////////////////////////
 	if (*str == 'c')
-		output_len = 1;
+		output_len = 1; //usare una funzione a_to_str per eliminare else 133
 	else if (*str == '%')
 		tmp_str = ft_strdup("%");
 	else if (*str == 's')
@@ -110,12 +111,14 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 		tmp_str = fill_u(args, precision);
 	else if (*str == 'p')
 		tmp_str = fill_p(args);
+	/////////////////////////////////////////////////////////////////////
 	if (*str != 'c')
 		output_len = f_strlen(tmp_str);
 	if (*padding > output_len && *str != '%')
 		*padding -= output_len;
 	else
 		*padding = 0;
+	////////////////////////////////////////////////////////////////////
 	if (*padding == 0 && (*f).is_space == 1 && *str != 's' && *str != 'c')
 	{
 		if (tmp_str[0] == '-' && f_strlen(tmp_str) < 2)
