@@ -15,15 +15,15 @@
 static int			until_identifier(struct flags *f, unsigned int *padding, unsigned int *precision, const char *str);
 static unsigned int	handle_identifier(struct flags *f, va_list *args, const char *str, unsigned int precision, unsigned int *padding);
 
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	int c;
-// 	int return1 = ft_printf("%+050d", -243);
-// 	write(1, "\n", 1);
-// 	int return2 = printf("%+050d", -243);
-// 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
-// }
+#include <stdio.h>
+int	main(void)
+{
+	int c;
+	//int return1 = ft_printf("\n%.50c", 'a');
+	//write(1, "\n", 1);
+	int return2 = ft_printf("%.5c", 'a');
+	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+}
 
 int	ft_printf(const char *str, ...)
 {
@@ -82,7 +82,7 @@ static int	until_identifier(flags *f, unsigned int *padding, unsigned int *preci
 		i += f_nbrlen(*padding, 10);
 	i--;
 	while (str[++i] == '.')
-		(*f).is_precision = 1;
+		(*f).is_precision = 1; //flag is_precision potenzialmente rimuovibile (stessa cosa checkare se precision >= 0)
 	*precision = f_atoi(str + i);
 	if (*precision > 0 || str[i] == '0')
 		i += f_nbrlen(*precision, 10);
@@ -99,9 +99,8 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 	tmp_str = NULL;
 	chars_written = 0;
 	//////////////////////////////////////////////////////////////////////
-	if (*str == 'c')
-		output_len = 1; //usare una funzione a_to_str per eliminare else 133
-	else if (*str == '%')
+ //usare una funzione a_to_str per eliminare else 133
+	if (*str == '%')
 		tmp_str = ft_strdup("%");
 	else if (*str == 's')
 		tmp_str = fill_s(args, precision, f);
@@ -112,8 +111,9 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 	else if (*str == 'p')
 		tmp_str = fill_p(args);
 	/////////////////////////////////////////////////////////////////////
-	if (*str != 'c')
-		output_len = f_strlen(tmp_str);
+	output_len = f_strlen(tmp_str);
+	if (*str == 'c')
+		output_len = (precision > 0);
 	if (*padding > output_len && *str != '%')
 		*padding -= output_len;
 	else
@@ -133,7 +133,7 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 	else
 	{
 		c = va_arg(*args, int);
-		chars_written += write(1, &c, 1);
+		chars_written += write(1, &c, (precision > 0));
 	}	
 	if ((*f).is_minus == 1)
 		chars_written += add_padding((char *)str, *padding, NULL, f);

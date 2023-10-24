@@ -16,6 +16,8 @@ int	f_strlen(char *s)
 {
 	int	n;
 
+	if (s == NULL)
+		return (0);
 	n = 0;
 	while (s[n])
 		n++;
