@@ -19,9 +19,9 @@ static unsigned int	handle_identifier(struct flags *f, va_list *args, const char
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf("%.X", 2);
+// 	int return1 = ft_printf("%08.5i", 34);
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%.X", 2);
+// 	int return2 = printf("%08.5i", 34);
 // 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
@@ -126,6 +126,8 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 		else if (tmp_str[0] != '-')
 			chars_written += write(1, " ", 1);
 	}
+	if ((*f).is_precision == 1)
+		(*f).padding_char = ' ';
 	if ((*f).is_minus == 0)
 		chars_written += add_padding((char *)str, *padding, &tmp_str, f);
 	if (*str != 'c')
