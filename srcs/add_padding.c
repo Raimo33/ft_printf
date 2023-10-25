@@ -6,13 +6,13 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 14:21:50 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:35:14 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-int	add_padding(char *str, unsigned int padding, char **tmp_str, struct flags *f)
+int	add_padding(char *str, unsigned int padding, char **tmp_str, t_flags *f)
 {
 	int		chars_written;
 	char	*tmp_str1;

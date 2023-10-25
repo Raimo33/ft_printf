@@ -6,13 +6,13 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 14:02:42 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:38:08 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-char	*fill_s(va_list *args, int precision, flags *f)
+char	*fill_s(va_list *args, int precision, t_flags *f)
 {
 	char	*tmp_str;
 
@@ -20,16 +20,16 @@ char	*fill_s(va_list *args, int precision, flags *f)
 	if (tmp_str == NULL)
 	{
 		free(tmp_str);
-		if (precision < 6 && (*f).is_precision == 1) //da sostituire la flag is_precision con precision >= 0 (parte da -1)
+		if (precision < 6 && (*f).is_precision == 1)
 			return (ft_strdup(""));
 		tmp_str = ft_strdup("(null)");
 	}
-	if (precision < f_strlen(tmp_str) && (*f).is_precision == 1) //da sostituire la flag is_precision con precision >= 0 (parte da -1)
+	if (precision < f_strlen(tmp_str) && (*f).is_precision == 1)
 		tmp_str[precision] = '\0';
 	return (tmp_str);
 }
 
-char	*fill_u(va_list *args, int precision, flags *f)
+char	*fill_u(va_list *args, int precision, t_flags *f)
 {
 	unsigned int	n;
 	char			*tmp_str;
@@ -44,7 +44,7 @@ char	*fill_u(va_list *args, int precision, flags *f)
 	return (new_str);
 }
 
-char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
+char	*fill_dixx(va_list *args, const char *str, int prec, t_flags *f)
 {
 	int		n;
 	char	*tmp_str;
@@ -55,7 +55,7 @@ char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
 	if (*str == 'd' || *str == 'i')
 	{
 		tmp_str = ft_itoa_base(n, "0123456789");
-		new_str = ft_strjoin(precision_str(precision, n, 10), tmp_str + (n < 0));
+		new_str = ft_strjoin(precision_str(prec, n, 10), tmp_str + (n < 0));
 		if (n < 0)
 		{
 			newest_str = ft_strjoin(ft_strdup("-"), new_str);
@@ -78,18 +78,18 @@ char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
 		if ((*f).is_hash == 1 && (unsigned int)n != 0 && (*f).padding_char == ' ')
 		{
 			new_str = ft_strjoin(ft_strdup("0x"), tmp_str);
-			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), new_str);
+			newest_str = ft_strjoin(precision_str(prec, (unsigned int)n, 16), new_str);
 			free(new_str);
 		}
 		else	
-			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
+			newest_str = ft_strjoin(precision_str(prec, (unsigned int)n, 16), tmp_str);
 		if (*str == 'X')
 			f_strtoupper(newest_str);
 	}
 	else
 		return (NULL);
-	if (precision < f_strlen(newest_str) && (*f).is_precision == 1 && n == 0)
-		newest_str[precision] = '\0';
+	if (prec < f_strlen(newest_str) && (*f).is_precision == 1 && n == 0)
+		newest_str[prec] = '\0';
 	free(tmp_str);
 	return (newest_str);
 }
