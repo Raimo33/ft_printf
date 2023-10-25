@@ -12,16 +12,17 @@
 
 #include "../ft_printf.h"
 
-static int			until_identifier(struct flags *f, unsigned int *padding, unsigned int *precision, const char *str);
-static unsigned int	handle_identifier(struct flags *f, va_list *args, const char *str, unsigned int precision, unsigned int *padding);
+static int				until_identifier(struct flags *f, unsigned int *padding, unsigned int *precision, const char *str);
+static unsigned int		handle_identifier(struct flags *f, va_list *args, const char *str, unsigned int precision, unsigned int *padding);
+static unsigned long	check_flags(const char *str, flags *f, unsigned long i);
 
 // #include <stdio.h>
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf("%08.5i", 34);
+// 	int return1 = ft_printf("%5c", '\0');
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%08.5i", 34);
+// 	int return2 = printf("%5c", '\0');
 // 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
@@ -55,8 +56,8 @@ int	ft_printf(const char *str, ...)
 
 static int	until_identifier(flags *f, unsigned int *padding, unsigned int *precision, const char *str)
 {
-	int	i;
-	int	num_zeros;
+	unsigned long	i;
+	int				num_zeros;
 
 	i = 0;
 	num_zeros = 0;
@@ -64,27 +65,13 @@ static int	until_identifier(flags *f, unsigned int *padding, unsigned int *preci
 		(*f).chars_written += write(1, &str[i++], 1);
 	if (str[i] == '\0')
 		return (i);
-	while (str[++i] == '-' || str[i] == '0' || str[i] == ' ' || str[i] == '#' || str[i] == '+') //questa roba separarla in una funzione (checkflags)
-	{
-		if (str[i] == '-')
-			(*f).is_minus = 1;
-		if (str[i] == '0')
-			(*f).padding_char = '0';
-		if (str[i] == ' ')
-			(*f).is_space = 1;
-		if (str[i] == '#')
-			(*f).is_hash = 1;
-		if (str[i] == '+')
-			(*f).is_plus = 1;
-	}
-	if ((*f).is_minus == 1)
-		(*f).padding_char = ' ';
+	i = check_flags(str, f, i);
 	*padding = f_atoi(str + i);
 	if (*padding > 0)
 		i += f_nbrlen(*padding, 10);
 	i--;
 	while (str[++i] == '.')
-		(*f).is_precision = 1; //da togliere
+		(*f).is_precision = 1;
 	while (str[i] == '0')
 		i++;
 	*precision = f_atoi(str + i);
@@ -102,7 +89,10 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 	tmp_str = NULL;
 	chars_written = 0;
 	if (*str == 'c')
-		output_len = 1;
+	{
+		c = va_arg(*args, int);
+		tmp_str = ft_strdup((char *)&c);
+	}
 	else if (*str == '%')
 		tmp_str = ft_strdup("%");
 	else if (*str == 's')
@@ -110,11 +100,10 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 	else if (*str == 'd' || *str == 'i' || *str == 'x' || *str == 'X')
 		tmp_str = fill_dixx(args, str, precision, f);
 	else if (*str == 'u')
-		tmp_str = fill_u(args, precision);
+		tmp_str = fill_u(args, precision, f);
 	else if (*str == 'p')
 		tmp_str = fill_p(args);
-	if (*str != 'c')
-		output_len = f_strlen(tmp_str);
+	output_len = f_strlen(tmp_str) + (tmp_str[0] == '\0' && *str == 'c');
 	if (*padding > output_len && *str != '%')
 		*padding -= output_len;
 	else
@@ -130,15 +119,30 @@ static unsigned int	handle_identifier(flags *f, va_list *args, const char *str, 
 		(*f).padding_char = ' ';
 	if ((*f).is_minus == 0)
 		chars_written += add_padding((char *)str, *padding, &tmp_str, f);
-	if (*str != 'c')
-		chars_written += write(1, tmp_str, f_strlen(tmp_str));
-	else
-	{
-		c = va_arg(*args, int);
-		chars_written += write(1, &c, 1);
-	}	
+	chars_written += write(1, tmp_str, output_len);
 	if ((*f).is_minus == 1)
 		chars_written += add_padding((char *)str, *padding, NULL, f);
 	free(tmp_str);
 	return (chars_written);
+}
+
+static unsigned long check_flags(const char *str, flags *f, unsigned long i)
+{
+
+	while (str[++i] == '-' || str[i] == '0' || str[i] == ' ' || str[i] == '#' || str[i] == '+') //strcmp(str++, "-0 #+")
+	{
+		if (str[i] == '-')
+			(*f).is_minus = 1;
+		if (str[i] == '0')
+			(*f).padding_char = '0';
+		if (str[i] == ' ')
+			(*f).is_space = 1;
+		if (str[i] == '#')
+			(*f).is_hash = 1;
+		if (str[i] == '+')
+			(*f).is_plus = 1;
+	}
+	if ((*f).is_minus == 1)
+		(*f).padding_char = ' ';
+	return (i);
 }

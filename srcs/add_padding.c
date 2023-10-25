@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 13:48:33 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:21:50 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	add_padding(char *str, unsigned int padding, char **tmp_str, struct flags *f
 			chars_written += (write(1, " ", 1));
 	}
 	else
-	{	
+	{
 		if (tmp_str != NULL && *tmp_str[0] == '-' && (*f).padding_char == '0')
 		{
 			chars_written += write (1, "-", 1);

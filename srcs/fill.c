@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 12:18:39 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:02:42 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*fill_s(va_list *args, int precision, flags *f)
 	return (tmp_str);
 }
 
-char	*fill_u(va_list *args, int precision)
+char	*fill_u(va_list *args, int precision, flags *f)
 {
 	unsigned int	n;
 	char			*tmp_str;
@@ -39,6 +39,8 @@ char	*fill_u(va_list *args, int precision)
 	tmp_str = ft_itoa_base(n, "0123456789");
 	new_str = ft_strjoin(precision_str(precision, n, 10), tmp_str);
 	free(tmp_str);
+	if (precision < f_strlen(new_str) && (*f).is_precision == 1 && n == 0)
+		new_str[precision] = '\0';
 	return (new_str);
 }
 
@@ -86,7 +88,7 @@ char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
 	}
 	else
 		return (NULL);
-	if (precision < f_strlen(newest_str) && (*f).is_precision == 1 && n == 0) //da sostituire la flag is_precision con precision >= 0 (parte da -1)
+	if (precision < f_strlen(newest_str) && (*f).is_precision == 1 && n == 0)
 		newest_str[precision] = '\0';
 	free(tmp_str);
 	return (newest_str);

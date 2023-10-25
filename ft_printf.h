@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 11:53:38 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 12:17:14 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:33:17 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char			*fill_c(va_list *args);
 char			*fill_dixx(va_list *args, const char *str, int precision, flags *f);
 char			*fill_p(va_list *args);
 char			*fill_s(va_list *args, int precision, flags *f);
-char			*fill_u(va_list *args, int precision);
+char			*fill_u(va_list *args, int precision, flags *f);
 int				add_padding(char *str, unsigned int padding, char **tmp_str, flags *f);
 char			*precision_str(int precision, long long n, int base);
 char			*ft_strcpy(char *dest, char *src);
