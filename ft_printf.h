@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 11:53:38 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 18:31:11 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:17:14 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char			*ft_strcpy(char *dest, char *src);
 char			*ft_strdup(char *src);
 char			*ft_strjoin(const char *s1, const char *s2);
 int				f_strlen(char *s);
+void			f_strtoupper(char *str);
 unsigned short	f_nbrlen(long long n, unsigned int base);
 unsigned short	f_unbrlen(unsigned long long n, unsigned int base);
 char			*ft_itoa_base(long long n, char *base);
