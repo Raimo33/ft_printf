@@ -41,8 +41,9 @@ static int	ft_cinstr(const char *str, const char c)
 {
 	while (*str != '\0')
 	{
-		if (*str++ == c)
+		if (*str == c)
 			return (1);
+		str++;
 	}
 	return (0);
 }
