@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 22:06:48 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 10:51:37 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*fill_s(va_list *args, int precision, flags *f)
 	if (tmp_str == NULL)
 	{
 		free(tmp_str);
-		return (ft_strdup("(null)"));
+		tmp_str = ft_strdup("(null)");
 	}
-	if (precision < f_strlen(tmp_str) && (*f).is_precision == 1)
+	if (precision < f_strlen(tmp_str) && (*f).is_precision == 1) //da sostituire la flag is_precision con precision >= 0 (parte da -1)
 		tmp_str[precision] = '\0';
 	return (tmp_str);
 }

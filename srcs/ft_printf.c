@@ -19,9 +19,9 @@ static unsigned int	handle_identifier(struct flags *f, va_list *args, const char
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf("%.c", 'a');
+// 	int return1 = ft_printf("%.5s%7s", "yo", "boi");
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%.c", 'a');
+// 	int return2 = printf("%.5s%7s", "yo", "boi");
 // 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
@@ -33,16 +33,16 @@ int	ft_printf(const char *str, ...)
 	unsigned int	padding;
 
 	f.chars_written = 0;
-	precision = 0;
-	f.is_minus = 0;
-	f.padding_char = ' ';
-	f.is_precision = 0;
-	f.is_space = 0;
-	f.is_hash = 0;
-	f.is_plus = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
+		precision = 0;
+		f.is_minus = 0;
+		f.padding_char = ' ';
+		f.is_precision = 0;
+		f.is_space = 0;
+		f.is_hash = 0;
+		f.is_plus = 0;
 		str += until_identifier(&f, &padding, &precision, str);
 		if (*str == '\0')
 			break ;
