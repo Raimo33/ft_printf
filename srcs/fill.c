@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 11:52:49 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 12:09:10 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
 	}
 	else
 		return (NULL);
+	if (precision < f_strlen(newest_str) && (*f).is_precision == 1 && n == 0) //da sostituire la flag is_precision con precision >= 0 (parte da -1)
+		newest_str[precision] = '\0';
 	free(tmp_str);
 	return (newest_str);
 }

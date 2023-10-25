@@ -19,9 +19,9 @@ static unsigned int	handle_identifier(struct flags *f, va_list *args, const char
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf("%.03s", NULL);
+// 	int return1 = ft_printf("%.X", 2);
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%.03s", NULL);
+// 	int return2 = printf("%.X", 2);
 // 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
