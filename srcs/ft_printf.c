@@ -19,10 +19,10 @@ static unsigned int	handle_identifier(struct flags *f, va_list *args, const char
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf("%.5s%7s", "yo", "boi");
+// 	int return1 = ft_printf("%.03s", NULL);
 // 	write(1, "\n", 1);
-// 	int return2 = printf("%.5s%7s", "yo", "boi");
-// 	//printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
+// 	int return2 = printf("%.03s", NULL);
+// 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
 int	ft_printf(const char *str, ...)
@@ -56,8 +56,10 @@ int	ft_printf(const char *str, ...)
 static int	until_identifier(flags *f, unsigned int *padding, unsigned int *precision, const char *str)
 {
 	int	i;
+	int	num_zeros;
 
 	i = 0;
+	num_zeros = 0;
 	while (str[i] != '%' && str[i] != '\0')
 		(*f).chars_written += write(1, &str[i++], 1);
 	if (str[i] == '\0')
@@ -82,10 +84,11 @@ static int	until_identifier(flags *f, unsigned int *padding, unsigned int *preci
 		i += f_nbrlen(*padding, 10);
 	i--;
 	while (str[++i] == '.')
-		(*f).is_precision = 1;
+		(*f).is_precision = 1; //da togliere
+	while (str[i] == '0')
+		i++;
 	*precision = f_atoi(str + i);
-	if (*precision > 0 || str[i] == '0')
-		i += f_nbrlen(*precision, 10);
+	i += f_nbrlen(*precision, 10) - (*precision == 0);
 	return (i);
 }
 

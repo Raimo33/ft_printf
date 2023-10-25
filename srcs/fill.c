@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 10:51:37 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:52:49 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*fill_s(va_list *args, int precision, flags *f)
 	if (tmp_str == NULL)
 	{
 		free(tmp_str);
+		if (precision < 6 && (*f).is_precision == 1) //da sostituire la flag is_precision con precision >= 0 (parte da -1)
+			return (ft_strdup(""));
 		tmp_str = ft_strdup("(null)");
 	}
 	if (precision < f_strlen(tmp_str) && (*f).is_precision == 1) //da sostituire la flag is_precision con precision >= 0 (parte da -1)
@@ -81,7 +83,7 @@ char	*fill_dixx(va_list *args, const char *str, int precision, flags *f)
 		else	
 			newest_str = ft_strjoin(precision_str(precision, (unsigned int)n, 16), tmp_str);
 	}
-	else if (*str == 'X')
+	else if (*str == 'X') //usare to_upper
 	{
 		tmp_str = ft_utoa_base((unsigned int)n, "0123456789ABCDEF");
 		if ((*f).is_hash == 1 && (unsigned int)n != 0 && (*f).padding_char == ' ')
