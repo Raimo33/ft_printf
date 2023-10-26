@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/26 12:09:12 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:12:17 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*fill_u(va_list *args, int prec, t_flags *f)
 
 char	*fill_di(va_list *args, int prec, t_flags *f)
 {
-	int 	n;
+	int		n;
 	char	*tmp_str;
 	char	*new_str;
 	char	*newest_str;

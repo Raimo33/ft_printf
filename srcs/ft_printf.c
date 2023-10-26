@@ -125,31 +125,29 @@ static long	check_flags(char *str, t_flags *f, long i)
 
 static char	*check_pad(char *str, t_flags *f, ui prec, va_list *args, ui *pad)
 {
-	char			*tmp_str;
+	char			*ts;
 	unsigned char	c;
 
-	tmp_str = NULL;
+	ts = NULL;
 	if (*str == 'c')
-	{
 		c = va_arg(*args, int);
-		tmp_str = ft_strdup((char *)&c);
-	}
+	if (*str == 'c')
+		ts = ft_strdup((char *)&c);
 	else if (*str == '%')
-		tmp_str = ft_strdup("%");
+		ts = ft_strdup("%");
 	else if (*str == 's')
-		tmp_str = fill_s(args, prec, f);
+		ts = fill_s(args, prec, f);
 	else if (*str == 'd' || *str == 'i')
-		tmp_str = fill_di(args, prec, f);
+		ts = fill_di(args, prec, f);
 	else if (*str == 'x' || *str == 'X')
-		tmp_str = fill_xx(args, str, prec, f);
+		ts = fill_xx(args, str, prec, f);
 	else if (*str == 'u')
-		tmp_str = fill_u(args, prec, f);
+		ts = fill_u(args, prec, f);
 	else if (*str == 'p')
-		tmp_str = fill_p(args);
-	if (*pad > (ui)(f_strlen(tmp_str)
-		+ (tmp_str[0] == '\0' && *str == 'c')) && *str != '%')
-		*pad -= f_strlen(tmp_str) + (tmp_str[0] == '\0' && *str == 'c');
+		ts = fill_p(args);
+	if (*pad > (ui)(f_strlen(ts) + (ts[0] == 0 && *str == 'c')) && *str != '%')
+		*pad -= f_strlen(ts) + (ts[0] == '\0' && *str == 'c');
 	else
 		*pad = 0;
-	return (tmp_str);
+	return (ts);
 }
