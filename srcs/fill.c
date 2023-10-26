@@ -6,13 +6,13 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 15:38:08 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/26 12:09:12 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-char	*fill_s(va_list *args, int precision, t_flags *f)
+char	*fill_s(va_list *args, int prec, t_flags *f)
 {
 	char	*tmp_str;
 
@@ -20,31 +20,57 @@ char	*fill_s(va_list *args, int precision, t_flags *f)
 	if (tmp_str == NULL)
 	{
 		free(tmp_str);
-		if (precision < 6 && (*f).is_precision == 1)
+		if (prec < 6 && (*f).is_prec == 1)
 			return (ft_strdup(""));
 		tmp_str = ft_strdup("(null)");
 	}
-	if (precision < f_strlen(tmp_str) && (*f).is_precision == 1)
-		tmp_str[precision] = '\0';
+	if (prec < f_strlen(tmp_str) && (*f).is_prec == 1)
+		tmp_str[prec] = '\0';
 	return (tmp_str);
 }
 
-char	*fill_u(va_list *args, int precision, t_flags *f)
+char	*fill_u(va_list *args, int prec, t_flags *f)
 {
-	unsigned int	n;
-	char			*tmp_str;
-	char			*new_str;
+	ui		n;
+	char	*tmp_str;
+	char	*new_str;
 
-	n = va_arg(*args, unsigned int);
+	n = va_arg(*args, ui);
 	tmp_str = ft_itoa_base(n, "0123456789");
-	new_str = ft_strjoin(precision_str(precision, n, 10), tmp_str);
+	new_str = ft_strjoin(prec_str(prec, n, 10), tmp_str);
 	free(tmp_str);
-	if (precision < f_strlen(new_str) && (*f).is_precision == 1 && n == 0)
-		new_str[precision] = '\0';
+	if (prec < f_strlen(new_str) && (*f).is_prec == 1 && n == 0)
+		new_str[prec] = '\0';
 	return (new_str);
 }
 
-char	*fill_dixx(va_list *args, const char *str, int prec, t_flags *f)
+char	*fill_di(va_list *args, int prec, t_flags *f)
+{
+	int 	n;
+	char	*tmp_str;
+	char	*new_str;
+	char	*newest_str;
+
+	n = va_arg(*args, int);
+	tmp_str = ft_itoa_base(n, "0123456789");
+	new_str = ft_strjoin(prec_str(prec, n, 10), tmp_str + (n < 0));
+	if (n < 0)
+		newest_str = ft_strjoin(ft_strdup("-"), new_str);
+	else
+	{
+		if ((*f).is_plus == 1 && (*f).pad_ch == ' ')
+			newest_str = ft_strjoin(ft_strdup("+"), new_str);
+		else
+			newest_str = ft_strdup(new_str);
+	}
+	if (prec < f_strlen(newest_str) && (*f).is_prec == 1 && n == 0)
+		newest_str[prec] = '\0';
+	free(new_str);
+	free(tmp_str);
+	return (newest_str);
+}
+
+char	*fill_xx(va_list *args, const char *str, int prec, t_flags *f)
 {
 	int		n;
 	char	*tmp_str;
@@ -52,43 +78,18 @@ char	*fill_dixx(va_list *args, const char *str, int prec, t_flags *f)
 	char	*newest_str;
 
 	n = va_arg(*args, int);
-	if (*str == 'd' || *str == 'i')
+	tmp_str = ft_utoa_base((ui)n, "0123456789abcdef");
+	if ((*f).is_hash == 1 && (ui)n != 0 && (*f).pad_ch == ' ')
 	{
-		tmp_str = ft_itoa_base(n, "0123456789");
-		new_str = ft_strjoin(precision_str(prec, n, 10), tmp_str + (n < 0));
-		if (n < 0)
-		{
-			newest_str = ft_strjoin(ft_strdup("-"), new_str);
-			free(new_str);
-		}
-		else
-		{
-			if ((*f).is_plus == 1 && (*f).padding_char == ' ')
-			{
-				newest_str = ft_strjoin(ft_strdup("+"), new_str);
-				free(new_str);
-			}
-			else
-				newest_str = new_str;
-		}
-	}
-	else if (*str == 'x' || *str == 'X')
-	{
-		tmp_str = ft_utoa_base((unsigned int)n, "0123456789abcdef");
-		if ((*f).is_hash == 1 && (unsigned int)n != 0 && (*f).padding_char == ' ')
-		{
-			new_str = ft_strjoin(ft_strdup("0x"), tmp_str);
-			newest_str = ft_strjoin(precision_str(prec, (unsigned int)n, 16), new_str);
-			free(new_str);
-		}
-		else	
-			newest_str = ft_strjoin(precision_str(prec, (unsigned int)n, 16), tmp_str);
-		if (*str == 'X')
-			f_strtoupper(newest_str);
+		new_str = ft_strjoin(ft_strdup("0x"), tmp_str);
+		newest_str = ft_strjoin(prec_str(prec, (ui)n, 16), new_str);
+		free(new_str);
 	}
 	else
-		return (NULL);
-	if (prec < f_strlen(newest_str) && (*f).is_precision == 1 && n == 0)
+		newest_str = ft_strjoin(prec_str(prec, (ui)n, 16), tmp_str);
+	if (*str == 'X')
+		f_strtoupper(newest_str);
+	if (prec < f_strlen(newest_str) && (*f).is_prec == 1 && n == 0)
 		newest_str[prec] = '\0';
 	free(tmp_str);
 	return (newest_str);

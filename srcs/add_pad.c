@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_padding.c                                      :+:      :+:    :+:   */
+/*   add_pad.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 21:46:26 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/25 15:35:14 by craimond         ###   ########.fr       */
+/*   Created: 2023/10/26 11:15:23 by craimond          #+#    #+#             */
+/*   Updated: 2023/10/26 11:16:31 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
 static int	zero_pad_minus(char **tmp_str, char **tmp_str1, char **tmp_str2);
-static int	zero_pad_hash(unsigned int *padding, char *str);
-static int	zero_pad_plus(unsigned int *padding);
+static int	zero_pad_hash(ui *pad, char *str);
+static int	zero_pad_plus(ui *pad);
 
-int	add_padding(char *str, unsigned int padding, char **tmp_str, t_flags *f)
+int	add_pad(char *str, ui pad, char **tmp_str, t_flags *f)
 {
 	int		chars_written;
 	char	*tmp_str1;
@@ -25,19 +25,21 @@ int	add_padding(char *str, unsigned int padding, char **tmp_str, t_flags *f)
 	chars_written = 0;
 	if (*str == 'p' || *str == 'c' || *str == 's')
 	{
-		while (padding-- > 0)
+		while (pad-- > 0)
 			chars_written += (write(1, " ", 1));
 	}
 	else
 	{
-		if (tmp_str != NULL && *tmp_str[0] == '-' && (*f).padding_char == '0')
+		if (tmp_str != NULL && *tmp_str[0] == '-' && (*f).pad_ch == '0')
 			chars_written += zero_pad_minus(tmp_str, &tmp_str1, &tmp_str2);
-		else if ((*f).is_hash == 1 && (*str == 'x' || *str == 'X') && (*f).padding_char == '0')
-			chars_written += zero_pad_hash(&padding, str);
-		else if ((*f).is_plus == 1 && (*str == 'i' || *str == 'd') && (*f).padding_char == '0')
-			chars_written += zero_pad_plus(&padding);
-		while (padding-- > 0)
-			chars_written += write(1, &(*f).padding_char, 1);
+		else if ((*f).is_hash == 1 && (*str == 'x' || *str == 'X')
+			&& (*f).pad_ch == '0')
+			chars_written += zero_pad_hash(&pad, str);
+		else if ((*f).is_plus == 1 && (*str == 'i' || *str == 'd')
+			&& (*f).pad_ch == '0')
+			chars_written += zero_pad_plus(&pad);
+		while (pad-- > 0)
+			chars_written += write(1, &(*f).pad_ch, 1);
 	}
 	return (chars_written);
 }
@@ -52,10 +54,10 @@ static int	zero_pad_minus(char **tmp_str, char **tmp_str1, char **tmp_str2)
 	return (write (1, "-", 1));
 }
 
-static int	zero_pad_hash(unsigned int *padding, char *str)
+static int	zero_pad_hash(ui *pad, char *str)
 {
-	if (*padding > 2)
-		*padding -= 2;
+	if (*pad > 2)
+		*pad -= 2;
 	if (*str == 'x')
 		return (write(1, "0x", 2));
 	else if (*str == 'X')
@@ -63,9 +65,9 @@ static int	zero_pad_hash(unsigned int *padding, char *str)
 	return (0);
 }
 
-static int	zero_pad_plus(unsigned int *padding)
+static int	zero_pad_plus(ui *pad)
 {
-	if (*padding > 1)
-		*padding -= 1;
+	if (*pad > 1)
+		*pad -= 1;
 	return (write(1, "+", 1));
 }

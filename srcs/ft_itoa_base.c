@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:32:43 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/23 15:19:29 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/26 11:55:04 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_itoa_base(long long n, char *base)
 {
-	char			*str;
-	unsigned int	n_len;
-	unsigned int	base_len;
+	char	*str;
+	ui		n_len;
+	ui		base_len;
 
 	base_len = f_strlen(base);
 	n_len = f_nbrlen(n, base_len);
@@ -41,9 +41,9 @@ char	*ft_itoa_base(long long n, char *base)
 
 char	*ft_utoa_base(unsigned long long n, char *base)
 {
-	char			*str;
-	unsigned int	n_len;
-	unsigned int	base_len;
+	char	*str;
+	ui		n_len;
+	ui		base_len;
 
 	base_len = f_strlen(base);
 	n_len = f_unbrlen(n, base_len);
