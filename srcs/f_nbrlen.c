@@ -12,7 +12,7 @@
 
 #include "../ft_printf.h"
 
-unsigned short	f_nbrlen(long long n, ui base)
+unsigned short	f_nbrlen(long long n, t_ui base)
 {
 	short	i;
 
@@ -30,7 +30,7 @@ unsigned short	f_nbrlen(long long n, ui base)
 	return (i + 1);
 }
 
-unsigned short	f_unbrlen(unsigned long long n, ui base)
+unsigned short	f_unbrlen(unsigned long long n, t_ui base)
 {
 	short	i;
 

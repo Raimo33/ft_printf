@@ -12,50 +12,39 @@
 
 #include "../ft_printf.h"
 
-static long	unt_id(t_flags *f, ui *pad, ui *prec, const char *str);
-static long	han_id(t_flags *f, va_list *args, const char *str, ui prec, ui *pad);
+static long	unt_id(t_flags *f, t_ui *pad, const char *str);
+static long	han_id(t_flags *f, va_list *args, const char *str, t_ui *pad);
 static long	check_flags(char *str, t_flags *f, long i);
-static char	*check_pad(char *str, t_flags *f, ui prec, va_list *args, ui *pad);
-
-// #include <stdio.h>
-// int	main(void)
-// {
-// 	int c;
-// 	int return1 = ft_printf("%c", 42);
-// 	write(1, "\n", 1);
-// 	int return2 = printf("%c", 42);
-// 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
-// }
+static char	*check_pad(char *str, t_flags *f, va_list *args, t_ui *pad);
 
 int	ft_printf(const char *str, ...)
 {
 	va_list			args;
 	t_flags			f;
-	ui				prec;
-	ui				pad;
+	t_ui			pad;
 
 	f.chars_written = 0;
 	va_start(args, str);
 	while (*str != '\0')
 	{
-		prec = 0;
+		f.prec = 0;
 		f.is_minus = 0;
 		f.pad_ch = ' ';
 		f.is_prec = 0;
 		f.is_space = 0;
 		f.is_hash = 0;
 		f.is_plus = 0;
-		str += unt_id(&f, &pad, &prec, str);
+		str += unt_id(&f, &pad, str);
 		if (*str == '\0')
 			break ;
-		f.chars_written += han_id(&f, &args, str, prec, &pad);
+		f.chars_written += han_id(&f, &args, str, &pad);
 		str++;
 	}
 	va_end(args);
 	return (f.chars_written);
 }
 
-static long	unt_id(t_flags *f, ui *pad, ui *prec, const char *str)
+static long	unt_id(t_flags *f, t_ui *pad, const char *str)
 {
 	long	i;
 
@@ -73,12 +62,12 @@ static long	unt_id(t_flags *f, ui *pad, ui *prec, const char *str)
 		(*f).is_prec = 1;
 	while (str[i] == '0')
 		i++;
-	*prec = f_atoi(str + i);
-	i += f_nbrlen(*prec, 10) - (*prec == 0);
+	(*f).prec = f_atoi(str + i);
+	i += f_nbrlen((*f).prec, 10) - ((*f).prec == 0);
 	return (i);
 }
 
-static long	han_id(t_flags *f, va_list *args, const char *str, ui prec, ui *pad)
+static long	han_id(t_flags *f, va_list *args, const char *str, t_ui *pad)
 {
 	char	*tmp_str;
 	int		chars_written;
@@ -86,7 +75,7 @@ static long	han_id(t_flags *f, va_list *args, const char *str, ui prec, ui *pad)
 
 	tmp_str = NULL;
 	chars_written = 0;
-	tmp_str = check_pad((char *)str, f, prec, args, pad);
+	tmp_str = check_pad((char *)str, f, args, pad);
 	if (*pad == 0 && (*f).is_space == 1 && *str != 's'
 		&& *str != 'c' && tmp_str[0] != '-')
 		chars_written += write(1, " ", 1);
@@ -123,31 +112,31 @@ static long	check_flags(char *str, t_flags *f, long i)
 	return (i);
 }
 
-static char	*check_pad(char *str, t_flags *f, ui prec, va_list *args, ui *pad)
+static char	*check_pad(char *str, t_flags *f, va_list *args, t_ui *pad)
 {
-	char			*ts;
+	char			*s;
 	unsigned char	c;
 
-	ts = NULL;
+	s = NULL;
 	if (*str == 'c')
 		c = va_arg(*args, int);
 	if (*str == 'c')
-		ts = ft_strdup((char *)&c);
+		s = ft_strdup((char *)&c);
 	else if (*str == '%')
-		ts = ft_strdup("%");
+		s = ft_strdup("%");
 	else if (*str == 's')
-		ts = fill_s(args, prec, f);
+		s = fill_s(args, (*f).prec, f);
 	else if (*str == 'd' || *str == 'i')
-		ts = fill_di(args, prec, f);
+		s = fill_di(args, (*f).prec, f);
 	else if (*str == 'x' || *str == 'X')
-		ts = fill_xx(args, str, prec, f);
+		s = fill_xx(args, str, (*f).prec, f);
 	else if (*str == 'u')
-		ts = fill_u(args, prec, f);
+		s = fill_u(args, (*f).prec, f);
 	else if (*str == 'p')
-		ts = fill_p(args);
-	if (*pad > (ui)(f_strlen(ts) + (ts[0] == 0 && *str == 'c')) && *str != '%')
-		*pad -= f_strlen(ts) + (ts[0] == '\0' && *str == 'c');
+		s = fill_p(args);
+	if (*pad > (t_ui)(f_strlen(s) + (s[0] == 0 && *str == 'c')) && *str != '%')
+		*pad -= f_strlen(s) + (s[0] == '\0' && *str == 'c');
 	else
 		*pad = 0;
-	return (ts);
+	return (s);
 }

@@ -6,17 +6,17 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 11:15:23 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/26 11:16:31 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:49:33 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
 static int	zero_pad_minus(char **tmp_str, char **tmp_str1, char **tmp_str2);
-static int	zero_pad_hash(ui *pad, char *str);
-static int	zero_pad_plus(ui *pad);
+static int	zero_pad_hash(t_ui *pad, char *str);
+static int	zero_pad_plus(t_ui *pad);
 
-int	add_pad(char *str, ui pad, char **tmp_str, t_flags *f)
+int	add_pad(char *str, t_ui pad, char **tmp_str, t_flags *f)
 {
 	int		chars_written;
 	char	*tmp_str1;
@@ -54,7 +54,7 @@ static int	zero_pad_minus(char **tmp_str, char **tmp_str1, char **tmp_str2)
 	return (write (1, "-", 1));
 }
 
-static int	zero_pad_hash(ui *pad, char *str)
+static int	zero_pad_hash(t_ui *pad, char *str)
 {
 	if (*pad > 2)
 		*pad -= 2;
@@ -65,7 +65,7 @@ static int	zero_pad_hash(ui *pad, char *str)
 	return (0);
 }
 
-static int	zero_pad_plus(ui *pad)
+static int	zero_pad_plus(t_ui *pad)
 {
 	if (*pad > 1)
 		*pad -= 1;

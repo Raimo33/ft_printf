@@ -6,7 +6,7 @@
 #    By: craimond <craimond@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/16 10:29:01 by craimond          #+#    #+#              #
-#    Updated: 2023/10/26 11:22:07 by craimond         ###   ########.fr        #
+#    Updated: 2023/10/26 14:43:36 by craimond         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,6 @@ fclean: clean
 
 re: fclean all
 
-bonus:
+bonus: all
 
 .PHONY: all clean fclean re bonus

@@ -6,7 +6,7 @@
 /*   By: craimond <craimond@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 09:54:24 by craimond          #+#    #+#             */
-/*   Updated: 2023/10/26 12:12:17 by craimond         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:52:09 by craimond         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ char	*fill_s(va_list *args, int prec, t_flags *f)
 
 char	*fill_u(va_list *args, int prec, t_flags *f)
 {
-	ui		n;
+	t_ui	n;
 	char	*tmp_str;
 	char	*new_str;
 
-	n = va_arg(*args, ui);
+	n = va_arg(*args, t_ui);
 	tmp_str = ft_itoa_base(n, "0123456789");
 	new_str = ft_strjoin(prec_str(prec, n, 10), tmp_str);
 	free(tmp_str);
@@ -78,15 +78,15 @@ char	*fill_xx(va_list *args, const char *str, int prec, t_flags *f)
 	char	*newest_str;
 
 	n = va_arg(*args, int);
-	tmp_str = ft_utoa_base((ui)n, "0123456789abcdef");
-	if ((*f).is_hash == 1 && (ui)n != 0 && (*f).pad_ch == ' ')
+	tmp_str = ft_utoa_base((t_ui)n, "0123456789abcdef");
+	if ((*f).is_hash == 1 && (t_ui)n != 0 && (*f).pad_ch == ' ')
 	{
 		new_str = ft_strjoin(ft_strdup("0x"), tmp_str);
-		newest_str = ft_strjoin(prec_str(prec, (ui)n, 16), new_str);
+		newest_str = ft_strjoin(prec_str(prec, (t_ui)n, 16), new_str);
 		free(new_str);
 	}
 	else
-		newest_str = ft_strjoin(prec_str(prec, (ui)n, 16), tmp_str);
+		newest_str = ft_strjoin(prec_str(prec, (t_ui)n, 16), tmp_str);
 	if (*str == 'X')
 		f_strtoupper(newest_str);
 	if (prec < f_strlen(newest_str) && (*f).is_prec == 1 && n == 0)
