@@ -21,9 +21,9 @@ static char				*check_padding(const char *str, t_flags *f, unsigned int precisio
 // int	main(void)
 // {
 // 	int c;
-// 	int return1 = ft_printf("% d", -1);
+// 	int return1 = ft_printf("%c", 42);
 // 	write(1, "\n", 1);
-// 	int return2 = printf("% d", -1);
+// 	int return2 = printf("%c", 42);
 // 	printf("\nreturn ft: %d\nreturn real: %d\n", return1, return2);
 // }
 
@@ -57,7 +57,7 @@ int	ft_printf(const char *str, ...)
 
 static int	until_identifier(t_flags *f, unsigned int *padding, unsigned int *precision, const char *str)
 {
-	unsigned long	i;
+	long	i;
 
 	i = 0;
 	while (str[i] != '%' && str[i] != '\0')
@@ -140,8 +140,7 @@ static char	*check_padding(const char *str, t_flags *f, unsigned int precision, 
 		tmp_str = fill_u(args, precision, f);
 	else if (*str == 'p')
 		tmp_str = fill_p(args);
-	if (*padding > (unsigned int)(f_strlen(tmp_str)
-		+ (tmp_str[0] == '\0' && *str == 'c')) && *str != '%')
+	if (*padding > (unsigned int)(f_strlen(tmp_str) + (tmp_str[0] == '\0' && *str == 'c')) && *str != '%')
 		*padding -= f_strlen(tmp_str) + (tmp_str[0] == '\0' && *str == 'c');
 	else
 		*padding = 0;
